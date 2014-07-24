@@ -195,12 +195,12 @@ public class Controller {
    /* Plays a certain number of games from beginning to end, and records
     * the scores in the State class it returns.
     */
-   public State playGames (int gameNumber, int reporting) {
+   public State playGames (int gameNumber, int reporting, int handSize) {
       int[] scores = new int[4];
 
       for (int i = 0; i < gameNumber; i++) {
          // Plays the first games
-         State tempState = play(13, reporting);
+         State tempState = play(handSize, reporting);
 
          // Assign scores
          for (int x = 0; x < 4; x++) {

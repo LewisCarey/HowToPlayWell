@@ -120,11 +120,12 @@ public class MCTS {
          if (tempLength > totalLength / 2) break;
       }
 
-      /* VISUALISE METHOD
+      /*
+      // VISUALISE METHOD
       System.out.println("Total Length = " + CalculateLengths(rootNode));
 
       String treeStructure = "{";
-      treeStructure += CalculatePositions(rootNode, tempLength, -1, 0);
+      treeStructure += CalculatePositions(rootNode, tempLength, -1, 1);
       treeStructure += "}";
       GameApp.Visualise(treeStructure, rootNode.getLength());
       */
@@ -178,6 +179,7 @@ public class MCTS {
          // Yes?
             // Split into two groups, left and right
             ArrayList<MCTSNode> children = childNode.getChildren();
+            /* FIX THIS MORE ADVANCE SPLITTING BASED ON LENGTH
             // Find the total length
             int totalLength = 0;
             for (MCTSNode i : children) {
@@ -202,7 +204,7 @@ public class MCTS {
             for (MCTSNode i : children) {
                // Call Calculate on all left nodes, sending leftBarrier + sum(prevChildNode.length)
                if (left = true) {
-                  nodeString += CalculatePositions(i, leftBarrier + prevLengths, myPos, depth++);
+                  nodeString += CalculatePositions(i, leftBarrier + prevLengths, myPos, depth + 1);
                   prevLengths += i.getLength();
                   if (prevLengths >= tempLength) {
                      left = false;
@@ -211,10 +213,51 @@ public class MCTS {
                }
                // Call calculate on all right nodes, sending your position as leftBarrier + prevChildNode.length
                else {
-                  nodeString += CalculatePositions(i, myPos + prevLengths, myPos, depth++);
+                  nodeString += CalculatePositions(i, myPos + prevLengths, myPos, depth + 1);
                   prevLengths += i.getLength();
                }
             }
+            */
+            // SPLITTING BASED ON NUMBER OF NODES
+            // Find the total length
+            int midway = children.size() / 2;
+            
+            // Find the midway point (length)
+            int tempLength = 0;
+            int count = 0;
+            for (MCTSNode i : children) {
+               tempLength += i.getLength();
+               if (count > midway) break;
+               count++;
+            }
+            // Place yourself at sum(left node lengths) + leftBarrier + 1
+            int myPos = tempLength + leftBarrier + 1;
+            nodeString += myPos + ",";
+            // Add width and parent info
+            nodeString += depth + ",";
+            nodeString += parentPos + ";";
+
+            count = 0;
+            boolean resetFlag = true;
+            int prevLengths = 0;
+            for (MCTSNode i : children) {
+               // Call Calculate on all left nodes, sending leftBarrier + sum(prevChildNode.length)
+               if (count <= midway) {
+                  nodeString += CalculatePositions(i, leftBarrier + prevLengths, myPos, depth + 1);
+                  prevLengths += i.getLength();
+               }
+               // Call calculate on all right nodes, sending your position as leftBarrier + prevChildNode.length
+               else {
+                  if (resetFlag) {
+                     prevLengths = 0;
+                     resetFlag = false;
+                  }
+                  nodeString += CalculatePositions(i, myPos + prevLengths, myPos, depth + 1);
+                  prevLengths += i.getLength();
+               }
+               count++;
+            }
+
             
       } else {
          // No?

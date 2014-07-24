@@ -24,12 +24,13 @@ public class GameApp {
       
 
       ArrayList<Card> cardsPlayed = new ArrayList<Card>();
-      /*
-      cardsPlayed.add(new Card(0, 0));
-      cardsPlayed.add(new Card(0, 1));
-      cardsPlayed.add(new Card(0, 2));
-      cardsPlayed.add(new Card(0, 3));
-      */
+      
+      for (int i = 0; i < 10; i++) {
+        for (int s = 0; s < 4; s++) {
+          cardsPlayed.add(new Card(s, i));
+        }
+      }
+
 
 
       ArrayList<Player> playerType = new ArrayList<Player>();
@@ -43,12 +44,14 @@ public class GameApp {
       Controller control = new Controller(testState, playerType);
     
       
-      State results = control.playGames(1000, 0);
-
+      State results = control.playGames(1000, 0, 3);
+      //State results = control.play(3, 1);
+      
       int[] scores = results.getScores();
       for (int i : scores) {
         System.out.println(i);
       }
+      
       
       
      //System.out.println(MCTS.search(testState, control.players[0].getHand()));

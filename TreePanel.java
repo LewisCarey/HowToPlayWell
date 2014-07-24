@@ -6,8 +6,8 @@ public class TreePanel extends JPanel {
    private JLabel label;
    private JLabel label2;
 
-   private int windowX = 10000;
-   private int windowY = 10000;
+   private int windowX = 1500;
+   private int windowY = 1000;
 
    private int nodeCircleWidth = 50;
    private int nodeCircleHeight = 50;

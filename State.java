@@ -73,8 +73,11 @@ public class State {
       // Remove the cards which have already been played
       for (Card i : cardsPlayed) {
          int x = 0;
-         while (x < cardsPlayed.size()) {
-            if (i.match(deck.get(x))) deck.remove(x);
+         while (x < deck.size()) {
+            if (i.match(deck.get(x))) {
+               deck.remove(x);
+               break;
+            }
             x++;
          }
       }
