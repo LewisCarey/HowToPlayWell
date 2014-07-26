@@ -1,0 +1,32 @@
+List of things to do on the hearts game:
+
+1) SIMULATE PLAY METHOD
+	-> Support for starting halfway through a trick
+	-> Add a overloaded method that takes an optional state with this info.
+		-> This is found in the Double Dummy playout method
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+SOME NOTES:
+
+SELECT METHOD:
+
+Currently, the select method works in a very naive fashion.
+For each node, we calculate the average score of that node,
+and then we subtract this from 13 to get X. We then add
+X + 1 of the node to an array.
+
+Once we have done this for all nodes, we randomly select from
+this array. This is a very simple approach for biasing nodes
+with a low average score.

@@ -23,14 +23,7 @@ public class GameApp {
    public static void main(String[]args) {
       
 
-      ArrayList<Card> cardsPlayed = new ArrayList<Card>();
-      
-      for (int i = 0; i < 10; i++) {
-        for (int s = 0; s < 4; s++) {
-          cardsPlayed.add(new Card(s, i));
-        }
-      }
-
+      ArrayList<Card> cardsPlayed = randomRemove(0);
 
 
       ArrayList<Player> playerType = new ArrayList<Player>();
@@ -44,7 +37,7 @@ public class GameApp {
       Controller control = new Controller(testState, playerType);
     
       
-      State results = control.playGames(1000, 0, 3);
+      State results = control.playGames(100000, 0, 13);
       //State results = control.play(3, 1);
       
       int[] scores = results.getScores();
@@ -187,4 +180,46 @@ public class GameApp {
       frame.pack();
       frame.setVisible(true);
    }
+
+   // Returns a random assortment of cards played
+  public static ArrayList<Card> randomRemove (int tricks) {
+    ArrayList<Card> deck = new ArrayList<Card>();
+
+    
+       // Generate an ArrayList of 52 cards
+       int suit = 0, rank = 0;
+       while (suit < 4) {
+          while (rank < 13) {
+             Card tempCard = new Card(suit, rank);
+             deck.add(tempCard);
+             rank++;
+          }
+          suit++;
+          rank = 0;
+       }
+    
+    
+
+    // Randomises the array
+    Random rand = new Random();
+    int randomNum;
+    Card tempCard;
+
+    // For each index in the deck starting at the last and decrementing
+    for(int i = deck.size() - 1; i > 0; i--) {
+       // Pick a card from the remainding deck
+       randomNum = rand.nextInt(i + 1);
+       // Swap the card at the end for the random number card
+       tempCard = deck.get(i);
+       deck.set(i, deck.get(randomNum));
+       deck.set(randomNum, tempCard);
+    }
+
+    // Return a portion of this randomised deck
+    ArrayList<Card> temp = new ArrayList<Card>();
+    for (int i = 0; i < 4*tricks; i++) {
+      temp.add(deck.get(i));
+    }
+    return temp;
+  }
 }

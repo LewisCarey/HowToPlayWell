@@ -238,13 +238,18 @@ public class Controller {
          
          if(reporting != 0) System.out.println("STARTING TRICK NUMBER " + i + " --------------");
          //System.out.println(players[0] + "\n" +players[1] + "\n" +players[2] + "\n" +players[3]);
+         
          // Each player plays a card
          currentTrick.set(startPlayer, players[startPlayer].getPlay(state));
          trickInPlay = true;
          currentSuit = currentTrick.get(startPlayer).getSuit();
+         state.setCurrentTrick(currentTrick);
          currentTrick.set(players[(startPlayer+1)%4].getPosition(), players[(startPlayer+1)%4].getPlay(state));
+         state.setCurrentTrick(currentTrick);
          currentTrick.set(players[(startPlayer+2)%4].getPosition(), players[(startPlayer+2)%4].getPlay(state));
+         state.setCurrentTrick(currentTrick);
          currentTrick.set(players[(startPlayer+3)%4].getPosition(), players[(startPlayer+3)%4].getPlay(state));
+         state.setCurrentTrick(currentTrick);
 
          // If a heart is in play that is not the first card
          if (!heartsBroken) {
@@ -276,6 +281,8 @@ public class Controller {
 
          if (reporting != 0) System.out.println(currentTrick + "\n");
          currentTrick.clear();
+
+         state.setCurrentTrick(new ArrayList<Card>());
       }
 
       // Creates a new State representing the game state as it is after the tricks were played out

@@ -60,6 +60,11 @@ public class DoubleDummy  {
       return playerScores[0];
    }
 
+   // Play out the round FROM HALFWAY THROUGH A TRICK
+   public static int PlayOut(ArrayList<Card> hand, ArrayList<ArrayList<Card>> opponentsHands, State state) {
+      return 0;
+   }
+
    // Plays the highest card it can provided there are no hearts currently being played. If there are, it
    // will play the lowest card.
    private static Card playCard (ArrayList<Card> hand, ArrayList<Card> currentTrick) {

@@ -71,6 +71,7 @@ public class MCTS {
          */
          // R <-- play_simulated_game(prev node)
          
+         // Must take into account the current trick from the state!
          int doesWin = SimulatePlay(currentNode, state, hand);
          
          // while (current node is within the State aka is not root node)
@@ -283,29 +284,35 @@ public class MCTS {
 
    }
 
-   // The select method. Selects a node from the children of the node given
-   // as a parameter.
-   // Implementation 0: Selects a node based on random distributions, weighted for the score of the node.
-   // --> at the moment does not account for negative scores, only adds chance for positive scores
+   /* Select method to account for scoring based on avergae hearts collected per visit.
+      The idea here is that the score associated with a node is how many hearts it has collected in total.
+      If we divide this by number of visits we get average hearts collected.
+      We increase the chance of picking a node with low average hearts, and decrease it otherwise.
+   */
    public static int Select(MCTSNode node) {
       int numberOfChildren = node.getNumberChildren();
       Random rand = new Random();
       ArrayList<Integer> indexSelection = new ArrayList<Integer>();
 
-      // Creates an array of intervals based on the scores of the children
+      // Adds nodes based on equation 13 - (average score / 2)
+      // If still 13, add no extra nodes
       for (int i = 0; i < numberOfChildren; i++) {
          // Adds at least 1 representation of node to indexSelection array
          indexSelection.add(i);
 
          MCTSNode temp = node.getChildren().get(i);
 
-         // Find how many more times the node has won then it has lost
-         int wins = temp.getScore() - (temp.getVisitCount() - temp.getScore());
+         // If node has been visited.
+         if (temp.getVisitCount() > 0) {
+            // Calculate average score / 2
+            int averageHeartScore = temp.getScore() / temp.getVisitCount();
+            int representation = 13 - temp.getScore();
 
-         // Adds the amount of wins to the selection array
-         for (int x = 0; x < wins; x++) {
-            indexSelection.add(i);
+            for (int z = 0; z < representation; z++) {
+               indexSelection.add(i);
+            }
          }
+       
       }
 
       // Selects a node at random from the array

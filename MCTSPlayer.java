@@ -74,7 +74,7 @@ public class MCTSPlayer implements Player {
       ArrayList<Card> legalHands = controller.getLegalHands(tempHand);
       
       // Play a card based on a MCTS with this hand
-     Card tempCard = MCTS.search(state, legalHands);
+      Card tempCard = MCTS.search(state, legalHands);
 
       // Find the card to remove
       int index = 0;

@@ -101,6 +101,10 @@ public class State {
       return deck;
    }
 
+   public void setCurrentTrick (ArrayList<Card> trick) {
+      this.currentTrick = trick;
+   }
+
    // Looking at the cards played, the current trick, and a set of cards, returns a list of Cards which may legally
    // be played next from the set.
    public ArrayList<Card> getLegalPlays (ArrayList<Card> candidates) {
