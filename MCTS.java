@@ -384,7 +384,7 @@ public class MCTS {
       // For each index in the deck starting at the last and decrementing
       Random rand = new Random();
       for(int i = deck.size() - 1; i > 0; i--) {
-         // Pick a card from the remainding deck
+         // Pick a card from the remaining deck
          int randomNum = rand.nextInt(i + 1);
          // Swap the card at the end for the random number card
          Card tempCard = deck.get(i);
@@ -402,6 +402,22 @@ public class MCTS {
          opponentsHands.get(1).add(deck.get(hand.size() + i));
          opponentsHands.get(2).add(deck.get((hand.size() * 2) + i));
       }
+
+      // Trying to add mid trick functionality
+      // Remove currently played cards in the trick
+      // Needs fixing - need to remove from the correct hands
+      /*
+      if (state.getCurrentTrick() != null) {
+         for (int i = 0; i < state.getCurrentTrick().size(); i++) {
+            for (int z = 0; z < 3; z++) {
+               for (int x = 0; x < opponentsHands.get(z).size(); x++) {
+                  if (opponentsHands.get(z).get(x).match(state.getCurrentTrick().get(i))) opponentsHands.get(z).remove(x);
+               }
+            }
+         }
+      }
+      */
+      
       
       //System.out.println(hand + "\n\n");
 
@@ -417,6 +433,15 @@ public class MCTS {
          copyOfHand.add(new Card(i.getSuit(), i.getRank()));
       }
       int win = DoubleDummy.PlayOut(copyOfHand, opponentsHands);
+      /*s
+      int win;
+      if (state.getCurrentTrick() != null && state.getCurrentTrick().size() > 0) {
+         win = DoubleDummy.PlayOut(copyOfHand, opponentsHands, state);
+      } else {
+         win = DoubleDummy.PlayOut(copyOfHand, opponentsHands);
+      }
+      */
+      
       
       return win;
    }

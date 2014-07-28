@@ -21,31 +21,38 @@ public class GameApp {
     *
     */
    public static void main(String[]args) {
-      
 
-      ArrayList<Card> cardsPlayed = randomRemove(0);
+      int numberOfGames = 100;
+
+      int[] totalScores = {0,0,0,0};
+      
+      for (int x = 0; x < numberOfGames; x++) {
+        ArrayList<Card> cardsPlayed = randomRemove(0);
 
 
-      ArrayList<Player> playerType = new ArrayList<Player>();
-      playerType.add(new MCTSPlayer());
-      playerType.add(new RandomPlayer());
-      playerType.add(new RandomPlayer());
-      playerType.add(new RandomPlayer());
+        ArrayList<Player> playerType = new ArrayList<Player>();
+        playerType.add(new MCTSPlayer());
+        playerType.add(new RandomPlayer());
+        playerType.add(new RandomPlayer());
+        playerType.add(new RandomPlayer());
+        
+        State testState = new State(false, -1, cardsPlayed);
+        
+        Controller control = new Controller(testState, playerType);
       
-      State testState = new State(false, -1, cardsPlayed);
-      
-      Controller control = new Controller(testState, playerType);
-    
-      
-      State results = control.playGames(100000, 0, 13);
-      //State results = control.play(3, 1);
-      
-      int[] scores = results.getScores();
-      for (int i : scores) {
-        System.out.println(i);
+        
+        State results = control.playGames(1, 0, 13);
+        //State results = control.play(3, 1);
+        
+        int[] scores = results.getScores();
+        for (int i = 0; i < 4; i++) {
+          totalScores[i] += scores[i];
+        }
       }
       
-      
+      for (int i = 0; i < 4; i++) {
+          System.out.println((double) totalScores[i] / numberOfGames);
+        }
       
      //System.out.println(MCTS.search(testState, control.players[0].getHand()));
       //Visualise("");

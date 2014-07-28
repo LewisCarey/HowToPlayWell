@@ -26,6 +26,7 @@ public class DoubleDummy  {
       players.add(opponentsHands.get(1));
       players.add(opponentsHands.get(2));
 
+      // PROBLEM: The player always starts the trick!
       int startPlayer = 0;
       // While there are still cards to be played
       while (players.get(0).size() > 0) {
@@ -61,8 +62,62 @@ public class DoubleDummy  {
    }
 
    // Play out the round FROM HALFWAY THROUGH A TRICK
+   // Since a state is passed, we assume that we should start the playout halfway through the trick.
    public static int PlayOut(ArrayList<Card> hand, ArrayList<ArrayList<Card>> opponentsHands, State state) {
-      return 0;
+      // Stores points
+      int[] playerScores = new int[4];
+
+      // Puts the players together
+      ArrayList<ArrayList<Card>> players = new ArrayList<ArrayList<Card>>();
+      players.add(opponentsHands.get(0));
+      players.add(opponentsHands.get(1));
+      players.add(opponentsHands.get(2));
+      if (state.getCurrentTrick().size() != 4) {
+         players.add(state.getCurrentTrick().size(), hand);
+      } else {
+         players.add(hand);
+      }
+
+      int startPlayer = state.getCurrentTrick().size();
+
+      // Deep copy the states current trick
+      ArrayList<Card> currentTrick = new ArrayList<Card>();
+      for (Card i : state.getCurrentTrick()) {
+         currentTrick.add(new Card(i.getSuit(), i.getRank()));
+      }
+
+      boolean resetTrick = false;
+      // While there are still cards to be played
+      while (players.get(0).size() > 0) {         
+         if (resetTrick) {
+            currentTrick = new ArrayList<Card>();
+         }
+         // Play out the trick
+         for (int i = 0; currentTrick.size() < 4; i++) {
+            
+            int currentPlayer = (startPlayer + i) % 4;
+
+            //System.out.println(players.get(currentPlayer));
+
+            Card cardToPlay = playCard(players.get(currentPlayer), currentTrick);
+            currentTrick.add(cardToPlay);
+            // Remove card played from players hand
+            int cardIndex = 0;
+            for (int z = 0; z < players.get(currentPlayer).size(); z++) {
+               if (players.get(currentPlayer).get(z).match(cardToPlay)) cardIndex = z;
+            }
+            players.get(currentPlayer).remove(cardIndex);
+         }
+
+         // Calculate the winner of the trick and how many points they receive
+         int previousStartPlayer = startPlayer;
+         startPlayer = getWinner(currentTrick, previousStartPlayer);
+         playerScores[startPlayer] += getPoints(currentTrick);
+         resetTrick = true;
+      }
+
+      // Return player score
+      return playerScores[0];
    }
 
    // Plays the highest card it can provided there are no hearts currently being played. If there are, it
@@ -111,10 +166,10 @@ public class DoubleDummy  {
 
    private static int getWinner (ArrayList<Card> trick, int startPlayer) {
       // Get trump suit
-      int trumpSuit = trick.get(startPlayer).getSuit();
+      int trumpSuit = trick.get(0).getSuit();
 
       // See what trump suit wins
-      int winningIndex = startPlayer;
+      int winningIndex = 0;
       for (int i = 0; i < trick.size(); i++) {
          // If suits match
          if (trick.get(winningIndex).getSuit() == trick.get(i).getSuit()) {

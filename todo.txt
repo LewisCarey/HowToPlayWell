@@ -2,10 +2,27 @@ List of things to do on the hearts game:
 
 1) SIMULATE PLAY METHOD
 	-> Support for starting halfway through a trick
-	-> Add a overloaded method that takes an optional state with this info.
-		-> This is found in the Double Dummy playout method
+	-> Method outline has been added
+		-> Need to ensure cards / hands are correct
+		-> Bugs causing array index out of bounds	
 
+2) Discuss potential improvements to the Double Dummy method with Michael.
 
+3) Also ask about when to start saving different versions of the implementation
+	-> My version already a small improvement over random, so should I save
+	   it and use it to compare future improvements against?
+
+AFTER FIRST METHOD TESTING:
+Since the end of the first implementation is approaching, we have to consider what implementation will be implemented next. After some testing / discussion with Michael Albert, coding for the second implementation should begin.
+
+IDEAS FOR SECOND IMPLEMENTATION:
+
+1) Currently, one MCTS is drawn and at each node a simulate play method is completed, each with a different random set of cards.
+	-> Instead of having one tree, have multiple
+	-> The tree assigns hands at the start, then traverses
+	-> Caluclate the best trees as opposed to best nodes
+
+2) Implement the UCT algorithm for the Select method.
 
 
 
@@ -30,3 +47,9 @@ X + 1 of the node to an array.
 Once we have done this for all nodes, we randomly select from
 this array. This is a very simple approach for biasing nodes
 with a low average score.
+
+MISC NOTES / OBSERVATIONS:
+
+* Had to randomise the start player for low trick games
+	-> It seems that the start player has a disadvantage, assumed to be
+	   because other players could not follow suit.
