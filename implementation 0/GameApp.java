@@ -48,6 +48,7 @@ public class GameApp {
         for (int i = 0; i < 4; i++) {
           totalScores[i] += scores[i];
         }
+        System.out.println("END OF GAME " + x);
       }
       
       for (int i = 0; i < 4; i++) {

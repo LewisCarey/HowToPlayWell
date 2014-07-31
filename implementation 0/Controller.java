@@ -224,7 +224,7 @@ public class Controller {
          players[2].setUp(2, hands.get(2), this);
          players[3].setUp(3, hands.get(3), this);
 
-         System.out.println("END OF GAME " + i + "\n\n\n\n");
+         //System.out.println("END OF GAME " + i + "\n\n\n\n");
       }
 
       return new State(scores, new int[13]);

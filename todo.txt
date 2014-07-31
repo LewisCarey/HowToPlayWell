@@ -6,11 +6,11 @@ List of things to do on the hearts game:
 		-> Need to ensure cards / hands are correct
 		-> Bugs causing array index out of bounds	
 
-2) Discuss potential improvements to the Double Dummy method with Michael.
+2) Save and keep track of your versions
+	-> Have baseline naive algorithm. It's not the best but it could be used to test improvements on
+	-> Potential write up needed?
 
-3) Also ask about when to start saving different versions of the implementation
-	-> My version already a small improvement over random, so should I save
-	   it and use it to compare future improvements against?
+3) Add new player types with some advanced logic
 
 AFTER FIRST METHOD TESTING:
 Since the end of the first implementation is approaching, we have to consider what implementation will be implemented next. After some testing / discussion with Michael Albert, coding for the second implementation should begin.
@@ -24,13 +24,12 @@ IDEAS FOR SECOND IMPLEMENTATION:
 
 2) Implement the UCT algorithm for the Select method.
 
+3) Improve the DoubleDummy playout with more advanced logic
+	-> E.g. play highest card unless winning trick
+	-> Maybe try to get rid of one suit first
 
-
-
-
-
-
-
+4) Add an option for the DoubleDummy simulation to have preset players as the logic
+	-> Make modular
 
 
 
