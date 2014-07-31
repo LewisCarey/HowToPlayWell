@@ -10,7 +10,17 @@ List of things to do on the hearts game:
 	-> Have baseline naive algorithm. It's not the best but it could be used to test improvements on
 	-> Potential write up needed?
 
-3) Add new player types with some advanced logic
+3) Add new player types with some advanced logic rules GO OVER
+	-> If last to play in trick
+		-> Play highest card of the suit ELSE
+		-> Play Queen of Spades ELSE
+		-> Play highest card of suit with fewset remaining cards
+	-> If leading the trick
+		-> Open with the lowest card...?
+	-> If 2nd or 3rd in trick
+		-> Play heighest card of suit that will not win trick ELSE
+		-> Play Queen of Spades ELSE
+		-> Play highest card of suit with fewset remaining cards
 
 AFTER FIRST METHOD TESTING:
 Since the end of the first implementation is approaching, we have to consider what implementation will be implemented next. After some testing / discussion with Michael Albert, coding for the second implementation should begin.
