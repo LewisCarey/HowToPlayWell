@@ -22,7 +22,7 @@ public class GameApp {
     */
    public static void main(String[]args) {
 
-      int numberOfGames = 100;
+      int numberOfGames = 10000;
 
       int[] totalScores = {0,0,0,0};
       
@@ -31,7 +31,7 @@ public class GameApp {
 
 
         ArrayList<Player> playerType = new ArrayList<Player>();
-        playerType.add(new MCTSPlayer());
+        playerType.add(new AdvancedPlayer());
         playerType.add(new RandomPlayer());
         playerType.add(new RandomPlayer());
         playerType.add(new RandomPlayer());

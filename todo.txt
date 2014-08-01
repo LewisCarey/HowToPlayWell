@@ -15,6 +15,7 @@ List of things to do on the hearts game:
 		-> Play highest card of the suit ELSE
 		-> Play Queen of Spades ELSE
 		-> Play highest card of suit with fewset remaining cards
+		-> Check to see if trick has hearts - if not, win it
 	-> If leading the trick
 		-> Open with the lowest card...?
 	-> If 2nd or 3rd in trick
