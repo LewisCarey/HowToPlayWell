@@ -26,8 +26,9 @@ public class DoubleDummy  {
       players.add(opponentsHands.get(1));
       players.add(opponentsHands.get(2));
 
-      // PROBLEM: The player always starts the trick!
-      int startPlayer = 0;
+      // Randomise the starting trick
+      Random rand = new Random();
+      int startPlayer = rand.nextInt(4);
       // While there are still cards to be played
       while (players.get(0).size() > 0) {
          ArrayList<Card> currentTrick = new ArrayList<Card>();
@@ -53,6 +54,7 @@ public class DoubleDummy  {
          // Calculate the winner of the trick and how many points they receive
          int previousStartPlayer = startPlayer;
          startPlayer = getWinner(currentTrick, previousStartPlayer);
+         System.out.println(startPlayer);
          playerScores[startPlayer] += getPoints(currentTrick);
 
       }
@@ -157,6 +159,7 @@ public class DoubleDummy  {
          // Calculate the winner of the trick and how many points they receive
          int previousStartPlayer = startPlayer;
          startPlayer = getWinner(currentTrick, previousStartPlayer);
+         System.out.println(startPlayer);
          playerScores[startPlayer] += getPoints(currentTrick);
          resetTrick = true;
       }
@@ -211,13 +214,13 @@ public class DoubleDummy  {
 
    private static int getWinner (ArrayList<Card> trick, int startPlayer) {
       // Get trump suit
-      int trumpSuit = trick.get(0).getSuit();
+      int trumpSuit = trick.get(startPlayer).getSuit();
 
       // See what trump suit wins
-      int winningIndex = 0;
+      int winningIndex = startPlayer;
       for (int i = 0; i < trick.size(); i++) {
          // If suits match
-         if (trick.get(winningIndex).getSuit() == trick.get(i).getSuit()) {
+         if (trumpSuit == trick.get(i).getSuit()) {
             // If rank is greater than, change it
             if (trick.get(winningIndex).getRank() < trick.get(i).getRank()) winningIndex = i;
          }

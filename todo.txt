@@ -61,6 +61,10 @@ Upon reaching a node to begin a random simulation...
 	-> Randomly remove the equivalent number of opponents cards from remaining deck
 	-> Randomly deal hands to the opponents
 	-> Begin a "DoubleDumy" playout under these conditions
+		-> DoubleDummy very naive, based on some simple rules
+		-> Will try avoid trick if Hearts, otherwise win
+		-> Does not support half made tricks
+		-> How significant will improvements be on this?
 	-> Simple algorithm - if no Hearts, play highest card, else lowest
 	-> Record results
 
@@ -77,6 +81,10 @@ SELECT METHOD:
 EXPANSION METHOD:
 
 SIMULATE METHOD:
+
+Number of improvements to the DoubleDummy playouts:
+	-> Randomised the start player (when no current trick passed) rather than assuming the player would start
+	-> Added support for halfway through trick *in progress
 
 BACKPROPAGATE METHOD:
 

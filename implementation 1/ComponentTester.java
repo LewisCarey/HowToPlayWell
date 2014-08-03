@@ -36,7 +36,7 @@ public class ComponentTester {
       opponentsHands.get(0).add(new Card(1, 1));
       opponentsHands.get(0).add(new Card(1, 2));
       opponentsHands.get(0).add(new Card(1, 3));
-      opponentsHands.get(1).add(new Card(1, 5));
+      opponentsHands.get(1).add(new Card(2, 0));
       opponentsHands.get(1).add(new Card(2, 1));
       opponentsHands.get(1).add(new Card(2, 2));
       opponentsHands.get(1).add(new Card(2, 3));
@@ -46,6 +46,11 @@ public class ComponentTester {
       opponentsHands.get(2).add(new Card(4, 3));
 
       State testState = new State(false, -1, null);
+      ArrayList<Card> trick = new ArrayList<Card>();
+      trick.add(new Card(2, 0));
+      trick.add(new Card(1, 0));
+      trick.add(new Card(3, 0));
+      testState.setCurrentTrick(trick);
 
       System.out.println(DoubleDummy.PlayOut(hand, opponentsHands, testState));
       
