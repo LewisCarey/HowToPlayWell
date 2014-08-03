@@ -2,29 +2,17 @@ List of things to do on the hearts game:
 
 1) SIMULATE PLAY METHOD
 	-> Support for starting halfway through a trick
-	-> Method outline has been added
-		-> Need to ensure cards / hands are correct
-		-> Bugs causing array index out of bounds	
+	-> Getting there, keep testing!	
 
-2) Save and keep track of your versions
-	-> Have baseline naive algorithm. It's not the best but it could be used to test improvements on
-	-> Potential write up needed?
+4) Investigate the apparent bias for order of Hearts players
+	-> There should be no bias at all, all spots should perform equally well
 
-3) Add new player types with some advanced logic rules GO OVER
-	-> If last to play in trick
-		-> Play highest card of the suit ELSE
-		-> Play Queen of Spades ELSE
-		-> Play highest card of suit with fewset remaining cards
-		-> Check to see if trick has hearts - if not, win it
-	-> If leading the trick
-		-> Open with the lowest card...?
-	-> If 2nd or 3rd in trick
-		-> Play heighest card of suit that will not win trick ELSE
-		-> Play Queen of Spades ELSE
-		-> Play highest card of suit with fewset remaining cards
+-------------------------------------------------------------------------------
 
 AFTER FIRST METHOD TESTING:
 Since the end of the first implementation is approaching, we have to consider what implementation will be implemented next. After some testing / discussion with Michael Albert, coding for the second implementation should begin.
+
+-------------------------------------------------------------------------------
 
 IDEAS FOR SECOND IMPLEMENTATION:
 
@@ -42,10 +30,13 @@ IDEAS FOR SECOND IMPLEMENTATION:
 4) Add an option for the DoubleDummy simulation to have preset players as the logic
 	-> Make modular
 
-
-
+-------------------------------------------------------------------------------
 
 SOME NOTES:
+
+-------------------------------------------------------------------------------
+
+IMPLEMENTATION 0:
 
 SELECT METHOD:
 
@@ -57,6 +48,39 @@ X + 1 of the node to an array.
 Once we have done this for all nodes, we randomly select from
 this array. This is a very simple approach for biasing nodes
 with a low average score.
+
+EXPANSION METHOD:
+
+Creates child nodes based on the card that can be played at the node.
+	-> Represents a PLAY, not the whole trick
+
+SIMULATE METHOD:
+
+Upon reaching a node to begin a random simulation...
+	-> Remove previously played cards from hand
+	-> Randomly remove the equivalent number of opponents cards from remaining deck
+	-> Randomly deal hands to the opponents
+	-> Begin a "DoubleDumy" playout under these conditions
+	-> Simple algorithm - if no Hearts, play highest card, else lowest
+	-> Record results
+
+BACKPROPAGATE METHOD:
+
+Basic backprop, adding score and visit count to previous nodes.
+
+-------------------------------------------------------------------------------
+
+IMPLEMENTATION 1:
+
+SELECT METHOD:
+
+EXPANSION METHOD:
+
+SIMULATE METHOD:
+
+BACKPROPAGATE METHOD:
+
+-------------------------------------------------------------------------------
 
 MISC NOTES / OBSERVATIONS:
 

@@ -83,6 +83,59 @@ public class AdvancedPlayer implements Player  {
          }
       } else if (player < 3) {
          // If the 2nd or 3rd player
+         // Check to see if we still have the suit
+         boolean playingToSuit = false;
+         int trumpSuit = state.getCurrentTrick().get(0).getSuit();
+         for (Card i : legalHands) {
+            if (i.getSuit() == trumpSuit) {
+               playingToSuit = true;
+               break;
+            }
+         }
+
+         if (playingToSuit) {
+            // Play lowest card possible
+            int rankLead = 0;
+            for (Card i : legalHands) {
+               if (i.getRank() > rankLead) {
+                  rankLead = i.getRank();
+               }
+            }
+
+            boolean foundCard = false;
+            // Do we have a card lower than the lead?
+            for (Card i : legalHands) {
+               if (i.getRank() < rankLead && i.getRank() > tempCard.getRank()) {
+                  tempCard = i;
+                  foundCard = true;
+               }
+            }
+            // If we didnt find a card, play highest
+            if (!foundCard) {
+               for (Card i : legalHands) {
+                  if (i.getRank() > tempCard.getRank()) {
+                     tempCard = i;
+                  }
+               }
+            }
+            
+
+         } else {
+            // If we are not playing to suit, unload QoS or our highest card
+            for (Card i : legalHands) {
+               if (i.getRank() > tempCard.getRank()) {
+                  tempCard = i;
+               }
+            }
+            // Check to see if we have QoS
+            for (Card i : legalHands) {
+               if (i.getSuit() == 1 && i.getSuit() == 10) {
+                  tempCard = i;
+                  break;
+               }
+            }
+
+         }
 
       } else {
          // Last player
@@ -138,8 +191,6 @@ public class AdvancedPlayer implements Player  {
                   }
                }
             }
-            
-
 
          } else {
             // If we are not playing to suit, unload QoS or our highest card

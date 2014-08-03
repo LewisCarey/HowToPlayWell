@@ -58,26 +58,13 @@ public class Controller {
       players[2].setUp(2, hands.get(2), this);
       players[3].setUp(3, hands.get(3), this);
 
-      // Finds the player with the two of clubs, and records that for start player,
-      // unless otherwise specified in the state.
-      startPlayer = 0;
-      boolean foundStart = false; // Flag that shows whether the 2 of clubs was present.
+      // Assigns a start player
       if (state == null || state.getStartPlayer() == -1) {
-         for (int i = 0; i < 4; i++) {
-            if (players[i].getStart() == true) {
-               startPlayer = i;
-               foundStart = true;
-            }
-         }
-      } else {
-         startPlayer = state.getStartPlayer();
-         foundStart = true;
-      }
-
-      // If we could not find a start player
-      if (!foundStart) {
          Random rand = new Random();
          startPlayer = rand.nextInt(4);
+      }
+      else {
+         startPlayer = state.getStartPlayer();
       }
 
       // Initiates the trick holding array

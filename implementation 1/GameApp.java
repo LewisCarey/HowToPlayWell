@@ -22,6 +22,8 @@ public class GameApp {
     */
    public static void main(String[]args) {
 
+      // MAIN GAME CODE HERE
+
       int numberOfGames = 10000;
 
       int[] totalScores = {0,0,0,0};
@@ -31,7 +33,7 @@ public class GameApp {
 
 
         ArrayList<Player> playerType = new ArrayList<Player>();
-        playerType.add(new AdvancedPlayer());
+        playerType.add(new MCTSPlayer());
         playerType.add(new RandomPlayer());
         playerType.add(new RandomPlayer());
         playerType.add(new RandomPlayer());
@@ -54,6 +56,8 @@ public class GameApp {
       for (int i = 0; i < 4; i++) {
           System.out.println((double) totalScores[i] / numberOfGames);
         }
+
+      // END MAIN GAME CODE
       
      //System.out.println(MCTS.search(testState, control.players[0].getHand()));
       //Visualise("");

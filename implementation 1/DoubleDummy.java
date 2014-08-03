@@ -69,16 +69,61 @@ public class DoubleDummy  {
 
       // Puts the players together
       ArrayList<ArrayList<Card>> players = new ArrayList<ArrayList<Card>>();
+
+      if (state.getCurrentTrick() == null) {
+         return PlayOut(hand, opponentsHands);
+      }
+      
+      // If there is a state with a current trick being played
+      if (state.getCurrentTrick().size() != 4) {
+         // Remove the currently played cards from the opponents hands
+
+         // For each card already played
+         for (Card z : state.getCurrentTrick()) {
+            // Scan through opponents and remove if found
+            for (int i = 0; i < 3; i++) {
+               for (int x = 0; x < opponentsHands.get(i).size(); x++) {
+                  if (opponentsHands.get(i).get(x).match(z)) opponentsHands.get(i).remove(x);
+               }
+            }
+         }  
+      }
+
+      // Redeal the opponents hands based on how many cards were played
+      ArrayList<Card> opponentsHandsPool = new ArrayList<Card>();
+      for (int i = 0; i < 3; i++) {
+         for (Card x : opponentsHands.get(i)) {
+            opponentsHandsPool.add(new Card(x.getSuit(), x.getRank()));
+         }
+      }
+      int dealCount = 0;
+      int deckIndex = 0;
+      while (dealCount < state.getCurrentTrick().size()) {
+         opponentsHands.get(dealCount).clear();
+         for (int i = 0; i < hand.size() - 1; i++) {
+            opponentsHands.get(dealCount).add(new Card(opponentsHandsPool.get(deckIndex).getSuit(), opponentsHandsPool.get(deckIndex).getRank()));
+            deckIndex++;
+         }
+         dealCount++;
+      }
+      // For the remaining hands just deal normal number, since no cards have been played
+      while (dealCount < 3) {
+         opponentsHands.get(dealCount).clear();
+         for (int i = 0; i < hand.size(); i++) {
+            opponentsHands.get(dealCount).add(new Card(opponentsHandsPool.get(deckIndex).getSuit(), opponentsHandsPool.get(deckIndex).getRank()));
+            deckIndex++;
+         }
+         dealCount++;
+      }
+
+      players.add(hand);
       players.add(opponentsHands.get(0));
       players.add(opponentsHands.get(1));
       players.add(opponentsHands.get(2));
-      if (state.getCurrentTrick().size() != 4) {
-         players.add(state.getCurrentTrick().size(), hand);
-      } else {
-         players.add(hand);
-      }
 
-      int startPlayer = state.getCurrentTrick().size();
+      // Opponents hands should now correctly reflect what has been played
+
+      int startPlayer = state.getCurrentTrick().size() + 1;
 
       // Deep copy the states current trick
       ArrayList<Card> currentTrick = new ArrayList<Card>();
