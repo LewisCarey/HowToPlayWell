@@ -344,7 +344,7 @@ public class MCTS {
       }
 
       // Gets the set of legal plays we can use
-      ArrayList<Card> legalPlays = state.getLegalPlays(currentHand);
+      ArrayList<Card> legalPlays = state.getLegalPlays(currentHand, -1);
       //System.out.println("HAND PLAYS SIZE " + hand.size());
       // Create nodes based on legal plays
       ArrayList<MCTSNode> tempChildren = new ArrayList<MCTSNode>();
@@ -432,15 +432,16 @@ public class MCTS {
       for (Card i : playerHand) {
          copyOfHand.add(new Card(i.getSuit(), i.getRank()));
       }
-      int win = DoubleDummy.PlayOut(copyOfHand, opponentsHands);
-      /*s
+      //int win = DoubleDummy.PlayOut(copyOfHand, opponentsHands);
+      
       int win;
+      //System.out.println("CURRENT TRICK SIZE = " + state.getCurrentTrick().size());
       if (state.getCurrentTrick() != null && state.getCurrentTrick().size() > 0) {
          win = DoubleDummy.PlayOut(copyOfHand, opponentsHands, state);
       } else {
          win = DoubleDummy.PlayOut(copyOfHand, opponentsHands);
       }
-      */
+      
       
       
       return win;

@@ -12,6 +12,8 @@ import java.util.*;
  */
 public class DoubleDummy  {
 
+   private static boolean verbose = false;
+
    // Returns the number of hearts collected by the player during the play out
    // Currently assumes that the player starts the trick
    public static int PlayOut(ArrayList<Card> hand, ArrayList<ArrayList<Card>> opponentsHands) {
@@ -54,7 +56,7 @@ public class DoubleDummy  {
          // Calculate the winner of the trick and how many points they receive
          int previousStartPlayer = startPlayer;
          startPlayer = getWinner(currentTrick, previousStartPlayer);
-         System.out.println(startPlayer);
+         //System.out.println(startPlayer);
          playerScores[startPlayer] += getPoints(currentTrick);
 
       }
@@ -100,7 +102,7 @@ public class DoubleDummy  {
       }
       int dealCount = 0;
       int deckIndex = 0;
-      while (dealCount < state.getCurrentTrick().size()) {
+      while (dealCount < Misc.RealSize(state.getCurrentTrick())) {
          opponentsHands.get(dealCount).clear();
          for (int i = 0; i < hand.size() - 1; i++) {
             opponentsHands.get(dealCount).add(new Card(opponentsHandsPool.get(deckIndex).getSuit(), opponentsHandsPool.get(deckIndex).getRank()));
@@ -122,16 +124,25 @@ public class DoubleDummy  {
       players.add(opponentsHands.get(0));
       players.add(opponentsHands.get(1));
       players.add(opponentsHands.get(2));
-
+      if (verbose) {
+         System.out.println("PLAYING OUT WITH THESE HANDS");
+         System.out.println(players.get(0));
+         System.out.println(players.get(1));
+         System.out.println(players.get(2));
+         System.out.println(players.get(3));
+         System.out.println("------------------------------");
+      }
+      
       // Opponents hands should now correctly reflect what has been played
 
-      int startPlayer = state.getCurrentTrick().size() + 1;
+      int startPlayer = Misc.RealSize(state.getCurrentTrick()) + 1;
 
       // Deep copy the states current trick
       ArrayList<Card> currentTrick = new ArrayList<Card>();
       for (Card i : state.getCurrentTrick()) {
-         currentTrick.add(new Card(i.getSuit(), i.getRank()));
+         if(i != null) currentTrick.add(new Card(i.getSuit(), i.getRank()));
       }
+      if (verbose) System.out.println("Starting with = " + currentTrick);
 
       boolean resetTrick = false;
       // While there are still cards to be played
@@ -139,27 +150,43 @@ public class DoubleDummy  {
          if (resetTrick) {
             currentTrick = new ArrayList<Card>();
          }
+         int beginningCardsInTrick = currentTrick.size();
          // Play out the trick
          for (int i = 0; currentTrick.size() < 4; i++) {
-            
+
             int currentPlayer = (startPlayer + i) % 4;
 
-            //System.out.println(players.get(currentPlayer));
-
-            Card cardToPlay = playCard(players.get(currentPlayer), currentTrick);
-            currentTrick.add(cardToPlay);
-            // Remove card played from players hand
-            int cardIndex = 0;
-            for (int z = 0; z < players.get(currentPlayer).size(); z++) {
-               if (players.get(currentPlayer).get(z).match(cardToPlay)) cardIndex = z;
+            if (verbose) {
+               System.out.println(players.get(currentPlayer));
+               System.out.println("Current Players Hand = " + players.get(currentPlayer));
+               System.out.println("Current Trick = " + currentTrick);
+               System.out.println("--------------");
             }
-            players.get(currentPlayer).remove(cardIndex);
+            // If an opponent has already played, it should not play again
+            if (beginningCardsInTrick > 0 && currentPlayer != 0 && currentPlayer <= beginningCardsInTrick) {
+
+            } else {
+               Card cardToPlay = playCard(players.get(currentPlayer), currentTrick);
+               currentTrick.add(cardToPlay);
+               // Remove card played from players hand
+               int cardIndex = 0;
+               for (int z = 0; z < players.get(currentPlayer).size(); z++) {
+                  if (players.get(currentPlayer).get(z).match(cardToPlay)) cardIndex = z;
+               }
+               players.get(currentPlayer).remove(cardIndex);
+            }
+            
          }
 
          // Calculate the winner of the trick and how many points they receive
-         int previousStartPlayer = startPlayer;
+         int previousStartPlayer = startPlayer - beginningCardsInTrick;
+         if (verbose) {
+            System.out.println("END TRICK = " + currentTrick);
+            System.out.println("Player who started trick = " + previousStartPlayer);
+            System.out.println("** NEW TRICK **");
+         }
          startPlayer = getWinner(currentTrick, previousStartPlayer);
-         System.out.println(startPlayer);
+         //System.out.println(startPlayer);
          playerScores[startPlayer] += getPoints(currentTrick);
          resetTrick = true;
       }

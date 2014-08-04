@@ -22,34 +22,33 @@ public class ComponentTester {
     */
    public static void main(String[]args) {
 
+      int tricks = 4;
+
       ArrayList<Card> hand = new ArrayList<Card>();
-      hand.add(new Card(0, 0));
-      hand.add(new Card(0, 1));
-      hand.add(new Card(0, 2));
-      hand.add(new Card(0, 3));
+
+      ArrayList<Card> pool = GameApp.randomRemove(tricks);
+
+      for(int i = 0; i < tricks; i++) {
+        hand.add(new Card(pool.get(i).getSuit(), pool.get(i).getRank()));
+      }
+      
+
+      
 
       ArrayList<ArrayList<Card>> opponentsHands = new ArrayList<ArrayList<Card>>();
       opponentsHands.add(new ArrayList<Card>());
       opponentsHands.add(new ArrayList<Card>());
       opponentsHands.add(new ArrayList<Card>());
-      opponentsHands.get(0).add(new Card(1, 0));
-      opponentsHands.get(0).add(new Card(1, 1));
-      opponentsHands.get(0).add(new Card(1, 2));
-      opponentsHands.get(0).add(new Card(1, 3));
-      opponentsHands.get(1).add(new Card(2, 0));
-      opponentsHands.get(1).add(new Card(2, 1));
-      opponentsHands.get(1).add(new Card(2, 2));
-      opponentsHands.get(1).add(new Card(2, 3));
-      opponentsHands.get(2).add(new Card(3, 0));
-      opponentsHands.get(2).add(new Card(3, 1));
-      opponentsHands.get(2).add(new Card(3, 2));
-      opponentsHands.get(2).add(new Card(4, 3));
+      
+      for (int i = 0; i < 3; i++) {
+        for (int z = 0; z < tricks; z++) {
+          opponentsHands.get(i).add(new Card(pool.get(tricks + (i * tricks) + z).getSuit(), pool.get(tricks + (i * tricks) + z).getRank()));
+        }
+      }
 
       State testState = new State(false, -1, null);
       ArrayList<Card> trick = new ArrayList<Card>();
       trick.add(new Card(2, 0));
-      trick.add(new Card(1, 0));
-      trick.add(new Card(3, 0));
       testState.setCurrentTrick(trick);
 
       System.out.println(DoubleDummy.PlayOut(hand, opponentsHands, testState));

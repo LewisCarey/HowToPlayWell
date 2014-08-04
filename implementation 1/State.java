@@ -111,15 +111,15 @@ public class State {
 
    // Looking at the cards played, the current trick, and a set of cards, returns a list of Cards which may legally
    // be played next from the set.
-   public ArrayList<Card> getLegalPlays (ArrayList<Card> candidates) {
+   public ArrayList<Card> getLegalPlays (ArrayList<Card> candidates, int trumpSuit) {
       ArrayList<Card> deck = candidates;
 
       ArrayList<Card> deleteList = new ArrayList<Card>();
 
       // If we have a current trick in play
-      if (currentTrick != null && currentTrick.size() != 0) {
+      if (currentTrick != null && Misc.RealSize(currentTrick) != 0) {
          // Find the trump suit
-         int trumpSuit = currentTrick.get(0).getSuit();
+         //int trumpSuit = currentTrick.get(0).getSuit();
          // If there is a card of that suit among the candidates, delete all other cards not of that suit
          boolean suitPresent = false;
          for (Card i : candidates) {

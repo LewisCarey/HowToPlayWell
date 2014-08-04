@@ -227,14 +227,14 @@ public class Controller {
 
       // Plays out the tricks specified
       for (int i = 0; i < tricks; i++) {
+         state.setCurrentTrick(new ArrayList<Card>(4));
          trickInPlay = false;
          for (int x = 0; x < 4; x++) {
-            currentTrick.add(new Card(0, 0));
+            currentTrick.add(null);
          }
          
          if(reporting != 0) System.out.println("STARTING TRICK NUMBER " + i + " --------------");
          //System.out.println(players[0] + "\n" +players[1] + "\n" +players[2] + "\n" +players[3]);
-         
          // Each player plays a card
          currentTrick.set(startPlayer, players[startPlayer].getPlay(state));
          trickInPlay = true;
@@ -278,7 +278,7 @@ public class Controller {
          if (reporting != 0) System.out.println(currentTrick + "\n");
          currentTrick.clear();
 
-         state.setCurrentTrick(new ArrayList<Card>());
+         
       }
 
       // Creates a new State representing the game state as it is after the tricks were played out

@@ -19,6 +19,10 @@ public class Card {
    private static String[] ranks = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "jack", "queen", "king", "ace"};
 
    Card (int suit, int rank) {
+      if (suit >= 4 || rank >= 13) {
+         System.out.println("Incorrect card spec");
+         return;
+      }
       this.suit = suit;
       this.rank = rank;
    }

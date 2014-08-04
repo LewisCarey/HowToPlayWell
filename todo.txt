@@ -2,7 +2,8 @@ List of things to do on the hearts game:
 
 1) SIMULATE PLAY METHOD
 	-> Support for starting halfway through a trick
-	-> Getting there, keep testing!	
+	-> Almost finished!
+		-> Check your MCTS is stopping exploring once it has fully expanded a path to the leaf nodes	
 
 4) Investigate the apparent bias for order of Hearts players
 	-> There should be no bias at all, all spots should perform equally well

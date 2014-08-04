@@ -29,12 +29,12 @@ public class GameApp {
       int[] totalScores = {0,0,0,0};
       
       for (int x = 0; x < numberOfGames; x++) {
-        ArrayList<Card> cardsPlayed = randomRemove(0);
+        ArrayList<Card> cardsPlayed = randomRemove(10);
 
 
         ArrayList<Player> playerType = new ArrayList<Player>();
-        playerType.add(new MCTSPlayer());
         playerType.add(new RandomPlayer());
+        playerType.add(new MCTSPlayer());
         playerType.add(new RandomPlayer());
         playerType.add(new RandomPlayer());
         
@@ -43,7 +43,7 @@ public class GameApp {
         Controller control = new Controller(testState, playerType);
       
         
-        State results = control.playGames(1, 0, 13);
+        State results = control.playGames(1, 0, 3);
         //State results = control.play(3, 1);
         
         int[] scores = results.getScores();
