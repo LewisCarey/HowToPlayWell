@@ -8,6 +8,9 @@ List of things to do on the hearts game:
 4) Investigate the apparent bias for order of Hearts players
 	-> There should be no bias at all, all spots should perform equally well
 
+3) Check that everything is performing as expected, and if it does not, ask Michael why it might not be.
+	-> Meant to give you good answers when not many tricks are left
+
 -------------------------------------------------------------------------------
 
 AFTER FIRST METHOD TESTING:
@@ -30,6 +33,13 @@ IDEAS FOR SECOND IMPLEMENTATION:
 
 4) Add an option for the DoubleDummy simulation to have preset players as the logic
 	-> Make modular
+
+-------------------------------------------------------------------------------
+
+IDEAS FOR THIRD IMPLEMENTATION:
+
+1) Introduce more hard and soft information
+	-> e.g. card counting and prediction
 
 -------------------------------------------------------------------------------
 
@@ -85,7 +95,7 @@ SIMULATE METHOD:
 
 Number of improvements to the DoubleDummy playouts:
 	-> Randomised the start player (when no current trick passed) rather than assuming the player would start
-	-> Added support for halfway through trick *in progress
+	-> Added support for halfway through trick
 
 BACKPROPAGATE METHOD:
 

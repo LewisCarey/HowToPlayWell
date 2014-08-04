@@ -22,6 +22,8 @@ public class Controller {
    private int currentSuit;
    private State state;
 
+   private static boolean verbose = true;
+
    /**
     * The main function, sets up the player space / hearts environment.
     *
@@ -57,6 +59,14 @@ public class Controller {
       players[1].setUp(1, hands.get(1), this);
       players[2].setUp(2, hands.get(2), this);
       players[3].setUp(3, hands.get(3), this);
+
+      if (verbose) {
+         System.out.println("Playing with these hands");
+         for (int i = 0; i < 4; i++) {
+            System.out.println(players[i]);
+         }
+         System.out.println();
+      }
 
       // Assigns a start player
       if (state == null || state.getStartPlayer() == -1) {

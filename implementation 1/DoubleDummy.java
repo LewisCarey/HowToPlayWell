@@ -12,7 +12,7 @@ import java.util.*;
  */
 public class DoubleDummy  {
 
-   private static boolean verbose = false;
+   private static boolean verbose = true;
 
    // Returns the number of hearts collected by the player during the play out
    // Currently assumes that the player starts the trick
@@ -23,11 +23,24 @@ public class DoubleDummy  {
 
       // Puts the players together
       ArrayList<ArrayList<Card>> players = new ArrayList<ArrayList<Card>>();
+      // Deep copy the hands
+      for (int i = 0; i < 4; i++) {
+         players.add(new ArrayList<Card>());
+      }
+      for (Card i : hand) {
+         players.get(0).add(new Card(i.getSuit(), i.getRank()));
+      }
+      for (int x = 1; x < 4; x++) {
+         for (Card i : opponentsHands.get(x-1)) {
+            players.get(x).add(new Card (i.getSuit(), i.getRank()));
+         }
+      }
+      /*
       players.add(hand);
       players.add(opponentsHands.get(0));
       players.add(opponentsHands.get(1));
       players.add(opponentsHands.get(2));
-
+      */
       // Randomise the starting trick
       Random rand = new Random();
       int startPlayer = rand.nextInt(4);
@@ -67,7 +80,20 @@ public class DoubleDummy  {
 
    // Play out the round FROM HALFWAY THROUGH A TRICK
    // Since a state is passed, we assume that we should start the playout halfway through the trick.
-   public static int PlayOut(ArrayList<Card> hand, ArrayList<ArrayList<Card>> opponentsHands, State state) {
+   public static int PlayOut(ArrayList<Card> preHand, ArrayList<ArrayList<Card>> preOpponentsHands, State state) {
+      ArrayList<Card> hand = new ArrayList<Card>();
+      ArrayList<ArrayList<Card>> opponentsHands = new ArrayList<ArrayList<Card>>();
+      for (Card i : preHand) {
+         hand.add(new Card(i.getSuit(), i.getRank()));
+      }
+      opponentsHands.add(new ArrayList<Card>());
+      opponentsHands.add(new ArrayList<Card>());
+      opponentsHands.add(new ArrayList<Card>());
+      for (int x = 0; x < 3; x++) {
+         for (Card i : preOpponentsHands.get(x)) {
+            opponentsHands.get(x).add(new Card(i.getSuit(), i.getRank()));
+         }
+      }
       // Stores points
       int[] playerScores = new int[4];
 

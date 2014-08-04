@@ -30,6 +30,9 @@ import java.util.*;
 
 public class MCTS {
 
+   private static boolean verbose = true;
+   private static boolean visualise = false;
+
    // Given a State and a Player, search the state space and return the
    // best card available to be played.
    public static Card search (State state, ArrayList<Card> hand) {
@@ -72,6 +75,8 @@ public class MCTS {
          // R <-- play_simulated_game(prev node)
          
          // Must take into account the current trick from the state!
+         if (verbose) System.out.println("Exploring a node with count: " + timer + " \n\n");
+         System.out.println("Current node represents : " + currentNode.getPlay());
          int doesWin = SimulatePlay(currentNode, state, hand);
          
          // while (current node is within the State aka is not root node)
@@ -121,15 +126,18 @@ public class MCTS {
          if (tempLength > totalLength / 2) break;
       }
 
-      /*
+      
       // VISUALISE METHOD
-      System.out.println("Total Length = " + CalculateLengths(rootNode));
+      if (visualise) {
+         //System.out.println("Total Length = " + CalculateLengths(rootNode));
 
-      String treeStructure = "{";
-      treeStructure += CalculatePositions(rootNode, tempLength, -1, 1);
-      treeStructure += "}";
-      GameApp.Visualise(treeStructure, rootNode.getLength());
-      */
+         String treeStructure = "{";
+         treeStructure += CalculatePositions(rootNode, tempLength, -1, 1);
+         treeStructure += "}";
+         GameApp.Visualise(treeStructure, rootNode.getLength());
+      }
+     
+      
       
       // Iterates down the tree
       //MCTS.Iterate(rootNode.getChildren(), 0);
@@ -436,6 +444,7 @@ public class MCTS {
       
       int win;
       //System.out.println("CURRENT TRICK SIZE = " + state.getCurrentTrick().size());
+      
       if (state.getCurrentTrick() != null && state.getCurrentTrick().size() > 0) {
          win = DoubleDummy.PlayOut(copyOfHand, opponentsHands, state);
       } else {
