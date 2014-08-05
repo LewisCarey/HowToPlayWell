@@ -73,7 +73,7 @@ public class AdvancedPlayer implements Player  {
       Card tempCard = legalHands.get(0);
       // Find out the player we are in the trick
       int player = 0;
-      if (state.getCurrentTrick() != null) player = state.getCurrentTrick().size();
+      if (state.getCurrentTrick() != null) player = Misc.RealSize(state.getCurrentTrick());
       if (player == 0) {
          // If starting player, open with lowest card
          for (Card i : legalHands) {
@@ -85,7 +85,14 @@ public class AdvancedPlayer implements Player  {
          // If the 2nd or 3rd player
          // Check to see if we still have the suit
          boolean playingToSuit = false;
-         int trumpSuit = state.getCurrentTrick().get(0).getSuit();
+         int trumpSuit;
+         if (Misc.RealSize(state.getCurrentTrick()) == 1) {
+            trumpSuit = state.getCurrentTrick().get(3).getSuit();
+         } else {
+            trumpSuit = state.getCurrentTrick().get(2).getSuit();
+         }
+            
+
          for (Card i : legalHands) {
             if (i.getSuit() == trumpSuit) {
                playingToSuit = true;
@@ -141,7 +148,8 @@ public class AdvancedPlayer implements Player  {
          // Last player
          // Check to see if we still have the suit
          boolean playingToSuit = false;
-         int trumpSuit = state.getCurrentTrick().get(0).getSuit();
+         //System.out.println(state.getCurrentTrick());
+         int trumpSuit = state.getCurrentTrick().get(1).getSuit();
          for (Card i : legalHands) {
             if (i.getSuit() == trumpSuit) {
                playingToSuit = true;
@@ -152,6 +160,7 @@ public class AdvancedPlayer implements Player  {
          // Check to see if the trick contains Hearts or QoS
          boolean dangerous = false;
          for (Card i : state.getCurrentTrick()) {
+            if (i == null) break;
             if (i.getSuit() == 0 || (i.getSuit() == 1 && i.getSuit() == 10)) {
                dangerous = true;
             }

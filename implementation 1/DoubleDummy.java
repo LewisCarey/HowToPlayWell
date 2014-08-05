@@ -12,7 +12,7 @@ import java.util.*;
  */
 public class DoubleDummy  {
 
-   private static boolean verbose = true;
+   private static boolean verbose = false;
 
    // Returns the number of hearts collected by the player during the play out
    // Currently assumes that the player starts the trick
@@ -81,6 +81,8 @@ public class DoubleDummy  {
    // Play out the round FROM HALFWAY THROUGH A TRICK
    // Since a state is passed, we assume that we should start the playout halfway through the trick.
    public static int PlayOut(ArrayList<Card> preHand, ArrayList<ArrayList<Card>> preOpponentsHands, State state) {
+      //System.out.println("IM BEING PASSED A HAND : " + preOpponentsHands.get(0));
+
       ArrayList<Card> hand = new ArrayList<Card>();
       ArrayList<ArrayList<Card>> opponentsHands = new ArrayList<ArrayList<Card>>();
       for (Card i : preHand) {

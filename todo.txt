@@ -1,9 +1,4 @@
-List of things to do on the hearts game:
-
-1) SIMULATE PLAY METHOD
-	-> Support for starting halfway through a trick
-	-> Almost finished!
-		-> Check your MCTS is stopping exploring once it has fully expanded a path to the leaf nodes	
+List of things to do on the hearts game:	
 
 4) Investigate the apparent bias for order of Hearts players
 	-> There should be no bias at all, all spots should perform equally well
@@ -47,7 +42,7 @@ SOME NOTES:
 
 -------------------------------------------------------------------------------
 
-IMPLEMENTATION 0:
+IMPLEMENTATION 0: Current improvement over random 3-4%
 
 SELECT METHOD:
 
@@ -85,7 +80,7 @@ Basic backprop, adding score and visit count to previous nodes.
 
 -------------------------------------------------------------------------------
 
-IMPLEMENTATION 1:
+IMPLEMENTATION 1: Current improvement over random 9-10%
 
 SELECT METHOD:
 
@@ -106,3 +101,6 @@ MISC NOTES / OBSERVATIONS:
 * Had to randomise the start player for low trick games
 	-> It seems that the start player has a disadvantage, assumed to be
 	   because other players could not follow suit.
+
+* Simply improving the DoubleDummy playout method had a huge improvement over performance,
+  suggesting that a great deal of the MCTS capability relies on the DoubleDummy method itself.

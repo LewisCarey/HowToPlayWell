@@ -22,7 +22,7 @@ public class Controller {
    private int currentSuit;
    private State state;
 
-   private static boolean verbose = true;
+   private static boolean verbose = false;
 
    /**
     * The main function, sets up the player space / hearts environment.

@@ -30,7 +30,7 @@ import java.util.*;
 
 public class MCTS {
 
-   private static boolean verbose = true;
+   private static boolean verbose = false;
    private static boolean visualise = false;
 
    // Given a State and a Player, search the state space and return the
@@ -76,7 +76,7 @@ public class MCTS {
          
          // Must take into account the current trick from the state!
          if (verbose) System.out.println("Exploring a node with count: " + timer + " \n\n");
-         System.out.println("Current node represents : " + currentNode.getPlay());
+         if (verbose) System.out.println("Current node represents : " + currentNode.getPlay());
          int doesWin = SimulatePlay(currentNode, state, hand);
          
          // while (current node is within the State aka is not root node)
@@ -334,7 +334,11 @@ public class MCTS {
    // This method will be modular - with different expansion methods being substituted and recorded.
    public static ArrayList<MCTSNode> Expand(MCTSNode node, State state, ArrayList<Card> hand) {
       // Copies the array to avoid side effects
-      ArrayList<Card> currentHand = hand;
+      ArrayList<Card> currentHand = new ArrayList<Card>();
+      for (Card i : hand) {
+         currentHand.add(new Card(i.getSuit(), i.getRank()));
+      }
+
 
       // Removes the cards that have been played already
       MCTSNode parent = node;
@@ -372,7 +376,11 @@ public class MCTS {
       
       // Assign random hands to the players
       ArrayList<Card> deck = state.getRemainingCards(hand);
-      ArrayList<Card> playerHand = hand;
+
+      ArrayList<Card> playerHand = new ArrayList<Card>();
+      for (Card i : hand) {
+         playerHand.add(new Card(i.getSuit(), i.getRank()));
+      }
       ArrayList<ArrayList<Card>> opponentsHands = new ArrayList<ArrayList<Card>>();
 
       // Remove the cards we have already played from our hands by recursively exploring the tree
@@ -399,17 +407,34 @@ public class MCTS {
          deck.set(i, deck.get(randomNum));
          deck.set(randomNum, tempCard);
       }
-      
+      //System.out.println("THIS IS A SHUFFLED DECK: " + deck);
       opponentsHands.add(new ArrayList<Card>());
       opponentsHands.add(new ArrayList<Card>());
       opponentsHands.add(new ArrayList<Card>());
 
+      /*
       // Assign the hands to the players
       for (int i = 0; i < playerHand.size(); i++) {
          opponentsHands.get(0).add(deck.get(i));
          opponentsHands.get(1).add(deck.get(hand.size() + i));
          opponentsHands.get(2).add(deck.get((hand.size() * 2) + i));
       }
+      */
+      // DEEP COPY
+   // System.out.println("THIS IS THE PLAYERS HAND : " + playerHand);
+
+      // If we are at the last node, we have to play this card. So we may as well see what tends to happen if we play this hand
+      if (playerHand.size() == 0) playerHand.add(new Card(hand.get(0).getSuit(), hand.get(0).getRank()));
+
+      for (int i = 0; i < playerHand.size(); i++) {
+         opponentsHands.get(0).add(new Card(deck.get(i).getSuit(), deck.get(i).getRank()));
+         opponentsHands.get(1).add(new Card(deck.get(hand.size() + i).getSuit(), deck.get(hand.size() + i).getRank()));
+         opponentsHands.get(2).add(new Card(deck.get((hand.size() * 2) + i).getSuit(), deck.get((hand.size() * 2) + i).getRank()));
+      }
+     // System.out.println("THIS IS A HAND: " + opponentsHands.get(0));
+
+      //System.out.println("THIS IS A HAND: " + opponentsHands.get(0));
+      //System.exit(0);
 
       // Trying to add mid trick functionality
       // Remove currently played cards in the trick
