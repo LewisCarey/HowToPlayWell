@@ -1,10 +1,16 @@
 List of things to do on the hearts game:	
 
-4) Investigate the apparent bias for order of Hearts players
+1) Investigate whether there is a bias for order of Hearts players
 	-> There should be no bias at all, all spots should perform equally well
 
-3) Check that everything is performing as expected, and if it does not, ask Michael why it might not be.
-	-> Meant to give you good answers when not many tricks are left
+2) Do some checks on the backpropagation to ensure that the scores are correct.
+	-> Remeber that a node has its own score as well as the score of the nodes below it.
+
+3) Implement UCT in implementation 2 of MCTS
+
+4) Continue testing some of the implementations you have - if results are inconcistent, ask yourself why. (Could just be from randomness)
+
+5) Make a schedule!!!!!!
 
 -------------------------------------------------------------------------------
 
@@ -83,6 +89,7 @@ Basic backprop, adding score and visit count to previous nodes.
 IMPLEMENTATION 1: Current improvement over random 9-10%
 
 SELECT METHOD:
+	-> TODO: Implement UCT
 
 EXPANSION METHOD:
 
@@ -96,6 +103,16 @@ BACKPROPAGATE METHOD:
 
 -------------------------------------------------------------------------------
 
+IMPLEMENTATION IDEAS:
+
+* Make a hand represent a trick as opposed to just a hand
+
+* Swap out the tree approach - instead of one tree with random deals at nodes, have multiple
+  trees that define a permanent deal at the root. Calculate the best move from the most common
+  move returned from the trees.
+
+-------------------------------------------------------------------------------
+
 MISC NOTES / OBSERVATIONS:
 
 * Had to randomise the start player for low trick games
@@ -104,3 +121,80 @@ MISC NOTES / OBSERVATIONS:
 
 * Simply improving the DoubleDummy playout method had a huge improvement over performance,
   suggesting that a great deal of the MCTS capability relies on the DoubleDummy method itself.
+
+-------------------------------------------------------------------------------
+
+EVALUATION METHODS
+
+There are three main methods that are to be used in the evaluation of the algorithms.
+Each of these methods assumes 6 player types.
+	1) Random
+	2) Basic Player (Rule based)
+	3) Advanced Player (Rule based)
+	4) MCTS Implementation 0
+	5) MCTS Implementation 1
+	6) MCTS Implementation 2
+
+Also to note, we need to retain the most information possible - probably results of each game
+copyed into a program like excel.
+
+METHOD 1
+
+Say we wish to compare our players.
+
+We playout some number of games with random deals (say 1000). Each player plays against
+3 other random opponents, and we look at the average number of Hearts collected. The same
+hands / games need to be played out by all players (not a different random game for each player).
+
+Once we have this information, we can then look at the difference in average Hearts collected
+in a graph format.
+
+We can then place the difference in a table like this...
+
+	1	2	3
+1	0.2	1	0.6 	...
+
+2	1	2	0.8	...
+
+3	3.4	5	0.7	...
+
+
+
+METHOD 2:
+
+From the above table, we may choose to look at some of the bigger differences in more detail.
+
+We can then play a player against X Y and Z, where XYZ are players from our player pool, and we
+can investigate how well they do against other player types.
+
+METHOD 3:
+
+When looking at MCTS specifically, we can make a graph of performance to timer varaible - as we increase
+how much time we are giving the algorithm, our results should also improve.
+
+OTHER METHODS:
+
+We can consider other methods, for example comparing components of MCTS, as we wish. But we should start
+with the main methods above.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

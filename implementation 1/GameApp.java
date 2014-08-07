@@ -33,7 +33,7 @@ public class GameApp {
 
 
         ArrayList<Player> playerType = new ArrayList<Player>();
-        playerType.add(new AdvancedPlayer());
+        playerType.add(new MCTSPlayer());
         playerType.add(new RandomPlayer());
         playerType.add(new RandomPlayer());
         playerType.add(new RandomPlayer());
