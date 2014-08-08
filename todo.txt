@@ -6,12 +6,23 @@ List of things to do on the hearts game:
 2) Do some checks on the backpropagation to ensure that the scores are correct.
 	-> Remeber that a node has its own score as well as the score of the nodes below it.
 
-3) Implement UCT in implementation 2 of MCTS
+3) Implement UCT in implementation 1 of MCTS
+	-> http://senseis.xmp.net/?UCT for info and pseudocode
+	-> Perform tests!
 
 4) Continue testing some of the implementations you have - if results are inconcistent, ask yourself why. (Could just be from randomness)
 
 5) Make a schedule!!!!!!
 
+6) REDO THE APP FOR TESTING PURPOSES
+	-> Should be testing all values on same hands
+	-> Should be recording results so you can find SD
+	-> Could be useful to practice getting these results into excel
+	-> If you build a prototype results collector, you'll have less work to do later on
+
+7) Test for coefficient and thresehold in UCT
+	-> Record how you did it and the results you found
+	-> Write up for report?
 -------------------------------------------------------------------------------
 
 AFTER FIRST METHOD TESTING:

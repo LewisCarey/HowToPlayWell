@@ -298,6 +298,10 @@ public class MCTS {
       We increase the chance of picking a node with low average hearts, and decrease it otherwise.
    */
    public static int Select(MCTSNode node) {
+
+      return Select.UCT(node);
+
+      /* Old select method 
       int numberOfChildren = node.getNumberChildren();
       Random rand = new Random();
       ArrayList<Integer> indexSelection = new ArrayList<Integer>();
@@ -327,6 +331,7 @@ public class MCTS {
       int successor = indexSelection.get(rand.nextInt(indexSelection.size()));
 
       return successor;
+      */
    }
 
    // Expands the node, creating child nodes based on the cards able to be played.

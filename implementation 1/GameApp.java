@@ -24,7 +24,7 @@ public class GameApp {
 
       // MAIN GAME CODE HERE
 
-      int numberOfGames = 10000;
+      int numberOfGames = 2000;
 
       int[] totalScores = {0,0,0,0};
       
