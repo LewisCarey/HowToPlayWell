@@ -7,6 +7,11 @@ public class MCTSPlayer implements Player {
    private ArrayList<Card> hand = new ArrayList<Card>();
    private int position;
    private Controller controller;
+   private int[] options;
+
+   public MCTSPlayer (int[] options) {
+      this.options = options;
+   }
 
    // Sets up the player state
    public void setUp (int position, ArrayList<Card> hand, Controller controller) {
@@ -74,7 +79,7 @@ public class MCTSPlayer implements Player {
       ArrayList<Card> legalHands = controller.getLegalHands(tempHand);
       
       // Play a card based on a MCTS with this hand
-      Card tempCard = MCTS.search(state, legalHands);
+      Card tempCard = MCTS.search(state, legalHands, options);
 
       // Find the card to remove
       int index = 0;

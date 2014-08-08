@@ -7,7 +7,7 @@ public class Select {
 
    // UCT Implementation
    // Returns the index in the nodes children array that points to the selected node
-   public static int UCT (MCTSNode node) {
+   public static int UCT (MCTSNode node, int option) {
       // Check to see if all the children have been explored - if not, randomly select from the children
       // that have not been explored.
       int visitThresehold = 20;
@@ -19,7 +19,7 @@ public class Select {
       // For each child of the current node, see which one performs the best in the UCT equation
       ArrayList<Double> nodeUCTScores = new ArrayList<Double>();
       // Coefficient - may need adjusting
-      double c = -7;
+      double c = option;
       for (int i = 0; i < children.size(); i++) {
          MCTSNode k = children.get(i);
          double averageHearts = k.getScore() / k.getVisitCount();

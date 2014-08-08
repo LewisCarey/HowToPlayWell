@@ -35,7 +35,7 @@ public class MCTS {
 
    // Given a State and a Player, search the state space and return the
    // best card available to be played.
-   public static Card search (State state, ArrayList<Card> hand) {
+   public static Card search (State state, ArrayList<Card> hand, int[] options) {
 
       
       
@@ -59,7 +59,7 @@ public class MCTS {
             // prev node <-- current node
             prevNode = currentNode;
             // current node <-- Select(current_node)
-            currentNode = currentNode.getChildren().get(Select(currentNode));
+            currentNode = currentNode.getChildren().get(Select(currentNode, options[0]));
             depth++;
          }
          
@@ -297,9 +297,9 @@ public class MCTS {
       If we divide this by number of visits we get average hearts collected.
       We increase the chance of picking a node with low average hearts, and decrease it otherwise.
    */
-   public static int Select(MCTSNode node) {
+   public static int Select(MCTSNode node, int option) {
 
-      return Select.UCT(node);
+      return Select.UCT(node, option);
 
       /* Old select method 
       int numberOfChildren = node.getNumberChildren();

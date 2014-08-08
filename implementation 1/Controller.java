@@ -28,7 +28,7 @@ public class Controller {
     * The main function, sets up the player space / hearts environment.
     *
     */
-   public Controller (State state, ArrayList<Player> playerTypes) {
+   public Controller (State state, ArrayList<Player> playerTypes, ArrayList<ArrayList> givenHands) {
       this.state = state;
 
       // Sets up the scores for each player
@@ -48,7 +48,9 @@ public class Controller {
       
 
       // Generates and assigns hands to the players based on what has already been played
-      ArrayList<ArrayList> hands = GenerateHands(state);
+      ArrayList<ArrayList> hands;
+      if (givenHands == null) hands = GenerateHands(state);
+      else hands = givenHands;
 
       // Creates the players
       players[0] = playerTypes.get(0);

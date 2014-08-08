@@ -22,6 +22,9 @@ public class GameApp {
     */
    public static void main(String[]args) {
 
+      // Options array - 0 = Select coefficient
+      int[] options = new int[1];
+
       // MAIN GAME CODE HERE
 
       int numberOfGames = 2000;
@@ -33,14 +36,14 @@ public class GameApp {
 
 
         ArrayList<Player> playerType = new ArrayList<Player>();
-        playerType.add(new MCTSPlayer());
+        playerType.add(new MCTSPlayer(options));
         playerType.add(new RandomPlayer());
         playerType.add(new RandomPlayer());
         playerType.add(new RandomPlayer());
         
         State testState = new State(false, -1, cardsPlayed);
         
-        Controller control = new Controller(testState, playerType);
+        Controller control = new Controller(testState, playerType, null);
       
         
         State results = control.playGames(1, 0, 13);
