@@ -12,8 +12,6 @@ List of things to do on the hearts game:
 
 4) Continue testing some of the implementations you have - if results are inconcistent, ask yourself why. (Could just be from randomness)
 
-5) Make a schedule!!!!!!
-
 6) REDO THE APP FOR TESTING PURPOSES
 	-> Should be testing all values on same hands
 	-> Should be recording results so you can find SD
@@ -23,6 +21,30 @@ List of things to do on the hearts game:
 7) Test for coefficient and thresehold in UCT
 	-> Record how you did it and the results you found
 	-> Write up for report?
+-------------------------------------------------------------------------------
+
+SCHEUDLE:
+
+13th August - Have finished the 2 distinct implementations
+27th August - Have 3rd implementation finished
+1st September - Finish testing environment and ALL CODING
+15th September - First draft of final report submitted
+22nd September - Second draft of final report submitted
+3rd October - Final copy of report submitted
+
+-------------------------------------------------------------------------------
+
+REPORT NOTES:
+
+Include a paragraph of some general findings / decisions regarding...
+	-> UCT Parameters
+		-> Coeefficient
+		-> Thresehold
+	-> Number of tests (found with SD)
+	-> Amount of time given to the MCTS algorithm
+
+Include in future work a discussion on the advantages of card counting / more soft information, since your focus was not on that.
+
 -------------------------------------------------------------------------------
 
 AFTER FIRST METHOD TESTING:
@@ -100,7 +122,7 @@ Basic backprop, adding score and visit count to previous nodes.
 IMPLEMENTATION 1: Current improvement over random 9-10%
 
 SELECT METHOD:
-	-> TODO: Implement UCT
+	-> UCT with chosen parameters
 
 EXPANSION METHOD:
 
@@ -109,6 +131,7 @@ SIMULATE METHOD:
 Number of improvements to the DoubleDummy playouts:
 	-> Randomised the start player (when no current trick passed) rather than assuming the player would start
 	-> Added support for halfway through trick
+	-> Potential TODO: change how the algorithm responds to playing different players
 
 BACKPROPAGATE METHOD:
 
