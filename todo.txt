@@ -9,6 +9,7 @@ List of things to do on the hearts game:
 3) Implement UCT in implementation 1 of MCTS
 	-> http://senseis.xmp.net/?UCT for info and pseudocode
 	-> Perform tests!
+	-> How do we know it is working correctly? Results are actually worse...
 
 4) Continue testing some of the implementations you have - if results are inconcistent, ask yourself why. (Could just be from randomness)
 
@@ -19,8 +20,12 @@ List of things to do on the hearts game:
 	-> If you build a prototype results collector, you'll have less work to do later on
 
 7) Test for coefficient and thresehold in UCT
-	-> Record how you did it and the results you found
-	-> Write up for report?
+	-> Talk to Michael about these results
+	-> Write them up!
+
+8) Tests on how long we should let the MCST develop for? e.g. value of timer
+
+9) Continue to implement DoubleDummyModular
 -------------------------------------------------------------------------------
 
 SCHEUDLE:
