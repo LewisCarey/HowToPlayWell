@@ -59,7 +59,8 @@ public class DoubleDummyModular  {
 
             //System.out.println(players.get(currentPlayer));
 
-            Card cardToPlay = playCard(players.get(currentPlayer), currentTrick);
+            // ADD PLAYER TYPE SUPPORT AND OPPONENTS HANDS
+            Card cardToPlay = playCard(players.get(currentPlayer), currentTrick, null, null);
             currentTrick.add(cardToPlay);
             // Remove card played from players hand
             int cardIndex = 0;
@@ -202,8 +203,8 @@ public class DoubleDummyModular  {
 
             } else {
 
-               // EDITED FOR PLAYER TYPES
-               Card cardToPlay = playCard(players.get(currentPlayer), currentTrick);
+               // ADD PLAYER TYPES AND OPPONENTS HANDS
+               Card cardToPlay = playCard(players.get(currentPlayer), currentTrick, null, null);
                
 
                currentTrick.add(cardToPlay);
@@ -236,7 +237,7 @@ public class DoubleDummyModular  {
 
    // Plays the highest card it can provided there are no hearts currently being played. If there are, it
    // will play the lowest card.
-   private static Card playCard (ArrayList<Card> hand, ArrayList<Card> currentTrick, Player playerType) {
+   private static Card playCard (ArrayList<Card> hand, ArrayList<Card> currentTrick, Player playerType, ArrayList<ArrayList<Card>> opponentsHands) {
 
       if (playerType == null) {
          // Finds the trump suit
@@ -280,7 +281,7 @@ public class DoubleDummyModular  {
          return play;
       } else {
          // If we specify a type of player that is playing
-         return playerType.DoubleDummyPlay(hand, opponentsHands, currentTrick);
+         return playerType.doubleDummyPlay(hand, opponentsHands, currentTrick);
       }
    }
 

@@ -96,8 +96,7 @@ public class RandomPlayer implements Player  {
       return hand;
    }
 
-   // Plays the hand based on DoubleDummy play - in this case simply random
-   public static Card DoubleDummyPlay (ArrayList<Card> hand, ArrayList<ArrayList<Card>> opponentsHands, State state) {
+   public Card doubleDummyPlay (ArrayList<Card> hand, ArrayList<ArrayList<Card>> opponentsHands, ArrayList<Card> currentTrick) {
       Random rand = new Random();
       return hand.get(rand.nextInt(hand.size()));
    }

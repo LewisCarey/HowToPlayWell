@@ -249,5 +249,9 @@ public class AdvancedPlayer implements Player  {
    public ArrayList<Card> getHand() {
       return hand;
    }
+
+   public Card doubleDummyPlay (ArrayList<Card> hand, ArrayList<ArrayList<Card>> opponentsHands, ArrayList<Card> currentTrick) {
+      return null;  
+   }
    
 }

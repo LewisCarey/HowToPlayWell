@@ -18,5 +18,7 @@ public interface Player {
 
    // Returns the players current hand
    public ArrayList<Card> getHand();
+
+   public Card doubleDummyPlay (ArrayList<Card> hand, ArrayList<ArrayList<Card>> opponentsHands, ArrayList<Card> currentTrick);
    
 }

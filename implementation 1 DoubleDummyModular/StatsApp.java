@@ -28,7 +28,7 @@ public class StatsApp {
 
       // MAIN GAME CODE HERE
 
-      int numberOfGames = 3000;
+      int numberOfGames = 1200;
       ArrayList<String> printResults = new ArrayList<String>();
       for (int i = 0; i < 10; i++) {
         printResults.add("");
@@ -41,8 +41,8 @@ public class StatsApp {
         // Generates the hands that are shared for each round
         ArrayList<ArrayList> hands = Controller.GenerateHands(testState);
         int count = 0;
-        for (int c = 0; c < 50; c+=5) {
-          options[0] = c;
+        //for (int c = 0; c < 50; c+=5) {
+          options[0] = 10;
 
           ArrayList<Player> playerType = new ArrayList<Player>();
           playerType.add(new MCTSPlayer(options));
@@ -69,7 +69,7 @@ public class StatsApp {
           printResults.set(count, temp);
           System.err.println("END OF GAME " + x);
           count++;
-        }
+        //}
       }
 
       for (String i : printResults) {

@@ -90,5 +90,9 @@ public class MCTSPlayer implements Player {
       hand.remove(index);
       return tempCard;
    }
+
+   public Card doubleDummyPlay (ArrayList<Card> hand, ArrayList<ArrayList<Card>> opponentsHands, ArrayList<Card> currentTrick) {
+      return null;
+   }
    
 }

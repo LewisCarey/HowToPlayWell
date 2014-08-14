@@ -11,8 +11,6 @@ List of things to do on the hearts game:
 	-> Perform tests!
 	-> How do we know it is working correctly? Results are actually worse...
 
-4) Continue testing some of the implementations you have - if results are inconcistent, ask yourself why. (Could just be from randomness)
-
 6) REDO THE APP FOR TESTING PURPOSES
 	-> Should be testing all values on same hands
 	-> Should be recording results so you can find SD
@@ -26,11 +24,15 @@ List of things to do on the hearts game:
 8) Tests on how long we should let the MCST develop for? e.g. value of timer
 
 9) Continue to implement DoubleDummyModular
+
+10) Write up explanantion of implementations
+
 -------------------------------------------------------------------------------
 
 SCHEUDLE:
 
 13th August - Have finished the 2 distinct implementations
+	-> OVERDUE
 27th August - Have 3rd implementation finished
 1st September - Finish testing environment and ALL CODING
 15th September - First draft of final report submitted
@@ -39,6 +41,20 @@ SCHEUDLE:
 
 -------------------------------------------------------------------------------
 
+NOTES ON TIMING AND INCONSISTENCY:
+
+The program right now is inconsistent. This can be fixed in a couple of ways.
+
+1) Increase timer for MCTS - this will also ensure UCT is implemented correctly.
+	-> Each game can take upto 10 seconds, or perhaps even longer.
+	-> For the current state of the first implementation (14/08), having the timer set to 200,000
+	   will have the cards executing at a rate of 9.37 seconds per game.
+
+2) Increase the amount of runs we use as a sample
+	-> Should satisfy condition of 2SD/sqrt(n) = 0.2
+
+3) Introduce diminishing returns to the MCTS - e.g. the less nodes it can explore, the less time it has
+-------------------------------------------------------------------------------
 REPORT NOTES:
 
 Include a paragraph of some general findings / decisions regarding...

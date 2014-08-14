@@ -14,6 +14,7 @@ import java.util.*;
  */
 public class GameApp {
    
+   private static boolean timer = false;
 
    /**
     * The main function, sets up the player space and begins the play
@@ -24,14 +25,14 @@ public class GameApp {
 
       // Options array - 0 = Select coefficient
       int[] options = new int[1];
-      options[0] = 20; // thresehold for mcts select
+      options[0] = 5; // thresehold for mcts select
 
       // MAIN GAME CODE HERE
 
-      int numberOfGames = 3000;
+      int numberOfGames = 100;
 
       int[] totalScores = {0,0,0,0};
-      
+      long startTime = System.nanoTime();
       for (int x = 0; x < numberOfGames; x++) {
         ArrayList<Card> cardsPlayed = randomRemove(0);
 
@@ -46,8 +47,10 @@ public class GameApp {
         
         Controller control = new Controller(testState, playerType, null);
       
+        // TIME
         
         State results = control.playGames(1, 0, 13);
+
         //State results = control.play(3, 1);
         
         int[] scores = results.getScores();
@@ -56,7 +59,11 @@ public class GameApp {
         }
         System.out.println("END OF GAME " + x);
       }
-      
+      if (timer) {
+        long endTime = System.nanoTime();
+        System.out.println("Games took: " + (((double)endTime - (double)startTime)/1000000000) + "seconds");
+      }
+
       for (int i = 0; i < 4; i++) {
           System.out.println((double) totalScores[i] / numberOfGames);
         }
