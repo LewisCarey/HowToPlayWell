@@ -260,6 +260,8 @@ List of things to do on the hearts game:
 8) Tests on how long we should let the MCST develop for? e.g. value of timer
 
 9) Continue to implement DoubleDummyModular
+	-> Do we need to even do this? Maybe just comparing the different methods of Selection and Simulation are enough?
+	-> Maybe come back and do it after third implementation?
 
 10) Write up explanantion of implementations
 

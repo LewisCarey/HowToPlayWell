@@ -66,7 +66,11 @@ public class StatsApp {
             
           }
           temp += "\n";
-          printResults.set(count, temp);
+          //printResults.set(count, temp);
+          
+          // For a single parameter
+          System.out.print(temp);
+
           System.err.println("END OF GAME " + x);
           count++;
         //}
