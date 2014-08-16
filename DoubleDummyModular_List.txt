@@ -1,0 +1,9 @@
+THINGS WE NEED TO DO FOR DoubleDummyModular CLASS:
+
+1) Add player type info to the State class so it may be retrieved.
+
+2) Add static methods to the player type classes that will play
+   a card in a DoubleDummy environment. We then call this from 
+   the PlayOut method in our DoubleDummyModular class.
+
+3) Set up the class to play out the rounds, keeping other things the same.
