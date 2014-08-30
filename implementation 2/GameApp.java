@@ -30,7 +30,7 @@ public class GameApp {
 
       // MAIN GAME CODE HERE
 
-      int numberOfGames = 10;
+      int numberOfGames = 1000;
 
       int[] totalScores = {0,0,0,0};
       

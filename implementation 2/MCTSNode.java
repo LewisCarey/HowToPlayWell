@@ -113,4 +113,8 @@ public class MCTSNode {
       return max;
    }
 
+   public double getAverageScore() {
+      return (double) score / (double) amountVisited;
+   }
+
 }

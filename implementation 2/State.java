@@ -70,7 +70,7 @@ public class State {
          rank = 0;
       }
 
-      System.out.println(cardsPlayed.size());
+      //System.out.println(cardsPlayed.size());
 
       // Remove the cards which have already been played
       for (Card i : cardsPlayed) {
@@ -152,6 +152,10 @@ public class State {
       for (Card i : trick) {
          cardsPlayed.add(new Card(i.getSuit(), i.getRank()));
       }
+   }
+
+   public ArrayList<Card> getCardsPlayed () {
+      return cardsPlayed;
    }
 
 

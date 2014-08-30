@@ -25,6 +25,7 @@ public class StatsApp {
 
       // Options array - 0 = Select coefficient
       int[] options = new int[1];
+      options[0] = 20;
       
 
       // MAIN GAME CODE HERE
@@ -41,40 +42,28 @@ public class StatsApp {
         State testState = new State(false, -1, cardsPlayed);
         // Generates the hands that are shared for each round
         ArrayList<ArrayList> hands = Controller.GenerateHands(testState);
-        int count = 0;
-        for (int c = 0; c < 50; c+=5) {
-          options[0] = c;
 
-          ArrayList<Player> playerType = new ArrayList<Player>();
-          playerType.add(new MCTSPlayer(options));
-          playerType.add(new RandomPlayer());
-          playerType.add(new RandomPlayer());
-          playerType.add(new RandomPlayer());
-          
-          
-          
-
-          Controller control = new Controller(testState, playerType, hands);
+        ArrayList<Player> playerType = new ArrayList<Player>();
+        playerType.add(new MCTSPlayer(options));
+        playerType.add(new RandomPlayer());
+        playerType.add(new RandomPlayer());
+        playerType.add(new RandomPlayer());
         
-          
-          State results = control.playGames(1, 0, 13);
-          //State results = control.play(3, 1);
-          
-          int[] scores = results.getScores();
-          String temp = printResults.get(count);
-          for (int i = 0; i < 4; i++) {
-            temp += scores[i] + ";";
-            
-          }
-          temp += "\n";
-          printResults.set(count, temp);
-          System.err.println("END OF GAME " + x);
-          count++;
-        }
-      }
+        
+        
 
-      for (String i : printResults) {
-        System.out.println(i);
+        Controller control = new Controller(testState, playerType, hands);
+      
+        
+        State results = control.playGames(1, 0, 13);
+        
+        int[] scores = results.getScores();
+        for (int i = 0; i < 4; i++) {
+          System.out.print(scores[i] + ";");
+        }
+        System.out.println();
+        System.err.println("END OF GAME " + x);
+        
       }
       
      }

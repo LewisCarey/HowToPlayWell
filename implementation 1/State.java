@@ -152,6 +152,10 @@ public class State {
       }
    }
 
+   public void resetCardsPlayed () {
+      cardsPlayed = new ArrayList<Card>();
+   }
+
 
 
 }

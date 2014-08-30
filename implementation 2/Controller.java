@@ -92,6 +92,7 @@ public class Controller {
 
       if (state != null) {
          deck = Misc.DeepCopyTrick(state.getRemainingCards());
+         //System.out.println(deck.size());
       } else {
          // Generate an ArrayList of 52 cards
          int suit = 0, rank = 0;

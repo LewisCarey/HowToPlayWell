@@ -86,7 +86,8 @@ public class MCTS {
             depth++;
          }
          
-         //System.out.println("Expanding at depth: " + depth);
+         if (verbose) System.out.println("Expanding at depth: " + depth);
+         if (verbose) System.out.println("Cards played: " + state.getCardsPlayed().size());
 
          // prev node <-- expand(prev node)
          // Assign children will have to append to the children array, not replace it
@@ -144,13 +145,22 @@ public class MCTS {
       System.out.println(rootNode);*/
 
       // Return the best move specified in tree
-      // To do this, simply look at the highest score on the first depth
+      // To do this, simply look at the LOWEST score on the first depth
       MCTSNode max = rootNode.getChildren().get(0);
       for (MCTSNode i : rootNode.getChildren()) {
-         if (i.getScore() > max.getScore()) {
+         if (i.getAverageScore() < max.getAverageScore()) {
             max = i;
          }
       }
+      // Max is now the node with the best score. Lets check if any are the same, and if so, change if visit count higher
+      for (MCTSNode i : rootNode.getChildren()) {
+         if (i.getAverageScore() == max.getAverageScore()) {
+            if (i.getVisitCount() > max.getVisitCount()) {
+               max = i;
+            }
+         }
+      }
+
       //System.out.println("The best move is :  " + max.getPlay());
 
       // Find midway point for root node
@@ -303,6 +313,8 @@ public class MCTS {
          //System.out.println(deal.get(0));
          //System.out.println(deal.get(1));
          ArrayList<ArrayList<Card>> revisedDeal = Misc.RemovePlayedCards(deal, node);
+         // If we have no plays left to expand, return empty
+         if (revisedDeal.get(0).size() == 0) return new ArrayList<MCTSNode>();
          //System.out.println(revisedDeal.get(0));
          // Expanding possible nodes based on all the remaining tricks available
          // Will expand until numChildren reached

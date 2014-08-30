@@ -48,7 +48,7 @@ public class MCTS {
       // CONSTRUCTS AND SEARCHES THE TREE
       // while (has time)
       int timer = 0;
-      while (timer < 200000) {
+      while (timer < 10000) {
          int depth = 0;
          // current node <-- root node
          currentNode = rootNode;

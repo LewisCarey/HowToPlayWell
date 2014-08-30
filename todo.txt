@@ -12,18 +12,33 @@ TODO 30/08:
 
 Current Goals:
 
+-> Keep testing that results are good!
+
+-> IMPLEMENTATIONS HAVE A BIG FLAW!!!!! - if changing, do it SEPARATLY! Keep the old code!
+	-> It will SELECT down to a leaf node, and then perform a simulation. This does not work in this implementation,
+	   as trick records are not stored. So you are randomly removing heaps of information and only really simulating
+	   out the final trick!
+	-> Need to have some way to simulate at different nodes, not just leaf nodes!!
+	-> FIND A FIX FOR THIS!!!!!! We are not collecting much information. Simulations need to be spread throughout the tree.
+	-> Is this an issue for the other type? Maybe not as much, BUT STILL THINK ABOUT IT!!! We may only ever be expanding
+	   at a non leaf node once... so we need to fix this!
+	
+-> Check that implementation 1 is only playing legal hands (actually print some code to test!)
+
+-> Need to find another unit of measurement than 10seconds, because this varies wildly based between computers.
+	-> Maybe number of separate MCTS performed?
+
 -> TESTING
 	-> Test the Controller.Generate... methods
 	-> Test the expand method only expanding legal plays
+	-> Expand has been "fixed" - needs testing! Are we including right cards? Expanding where we should? Not looping?
 
--> Expand broken
-	-> Revised deal removng all cards from the players hand. Are we removing too many somewhere or something like that?
-	-> ALSO CHECK GENERATE METHODS!!!! Might be pulling from random cards that are too many or have already been played
-		-> Generate hands is not taking into account the cards already played previously in the game?
-		-> State get remaining cards not working?	
-			-> DEFINITLY NOT WORKING!
-			-> Cards Played is not being added to :( NOT DOING IT IN OLD IMPLEMENTATIONS EITHER!!!!
-			-> Also check the get cards played method
+-> Getting the other methods sorted
+	-> I think implementation 1 is fine, but keep looking at notes below...
+	-> Expansion WILL need redone in previous implementations so they take into account cards already played!!!	
+		-> And be sure you are always retaining the players hand!!!
+		-> Test anywhere hands need to be generated. This bug is critical and needs a solution!!!
+		-> Afterwards test your programs again for any improvements!!!
 
 -> Build the Simulate Play method for the 2nd implementation
 	-> Make sure scores are being applied correctly to nodes and things.

@@ -77,4 +77,8 @@ public class MCTSNode {
       this.length = length;
    }
 
+   public double getAverageScore() {
+      return (double) score / (double) amountVisited;
+   }
+
 }

@@ -48,7 +48,7 @@ public class MCTS {
       // CONSTRUCTS AND SEARCHES THE TREE
       // while (has time)
       int timer = 0;
-      while (timer < 1000) {
+      while (timer < 10000) {
          int depth = 0;
          // current node <-- root node
          currentNode = rootNode;
@@ -105,8 +105,16 @@ public class MCTS {
       // To do this, simply look at the highest score on the first depth
       MCTSNode max = rootNode.getChildren().get(0);
       for (MCTSNode i : rootNode.getChildren()) {
-         if (i.getScore() > max.getScore()) {
+         if (i.getAverageScore() < max.getAverageScore()) {
             max = i;
+         }
+      }
+      // Max is now the node with the best score. Lets check if any are the same, and if so, change if visit count higher
+      for (MCTSNode i : rootNode.getChildren()) {
+         if (i.getAverageScore() == max.getAverageScore()) {
+            if (i.getVisitCount() > max.getVisitCount()) {
+               max = i;
+            }
          }
       }
       //System.out.println("The best move is :  " + max.getPlay());
@@ -381,6 +389,8 @@ public class MCTS {
       
       // Assign random hands to the players
       ArrayList<Card> deck = state.getRemainingCards(hand);
+      //System.out.println("THIS IS THE DECK SIZE : " + deck.size());
+      //System.out.println("THIS IS THE HAND : " + hand);
 
       ArrayList<Card> playerHand = new ArrayList<Card>();
       for (Card i : hand) {
@@ -426,7 +436,7 @@ public class MCTS {
       }
       */
       // DEEP COPY
-   // System.out.println("THIS IS THE PLAYERS HAND : " + playerHand);
+      //System.out.println("THIS IS THE DECK SIZE : " + deck.size());
 
       // If we are at the last node, we have to play this card. So we may as well see what tends to happen if we play this hand
       if (playerHand.size() == 0) playerHand.add(new Card(hand.get(0).getSuit(), hand.get(0).getRank()));
