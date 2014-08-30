@@ -1,3 +1,59 @@
+TODO 30/08:
+-> Aim is to have all coding completed (or near to it) by end of tomorrow
+	-> Make easy ways to test the different methods
+	-> Once methods have been fully tested, we need all the players in one program
+	-> Set up the testing environment (data collection etc) so that we can run it on multiple computers
+
+-> Begin write up of final report - we want first draft done in 2 weeks
+	-> Get the different sections of the report outlined
+	-> See what you can / can't include in the report
+
+-------------------------------------------------------------------------------
+
+Current Goals:
+
+-> TESTING
+	-> Test the Controller.Generate... methods
+	-> Test the expand method only expanding legal plays
+
+-> Expand broken
+	-> Revised deal removng all cards from the players hand. Are we removing too many somewhere or something like that?
+	-> ALSO CHECK GENERATE METHODS!!!! Might be pulling from random cards that are too many or have already been played
+		-> Generate hands is not taking into account the cards already played previously in the game?
+		-> State get remaining cards not working?	
+			-> DEFINITLY NOT WORKING!
+			-> Cards Played is not being added to :( NOT DOING IT IN OLD IMPLEMENTATIONS EITHER!!!!
+			-> Also check the get cards played method
+
+-> Build the Simulate Play method for the 2nd implementation
+	-> Make sure scores are being applied correctly to nodes and things.
+
+-> More DoubleDummy information in PlayOut method?
+
+-> Expansion method:
+	-> Assigning the children to the node needs to append (not replace)
+		-> Will also need to check against duplicates
+	-> Need to find a way to keep / generate a deal at the beginning of the MCTS
+	-> Maybe do the actual expand method first
+	-> Root node needs to be assigned the initial trick (could be empty or upto 3 cards)
+		-> Trick needs to have filler null nodes when passed to MCTS search	
+		-> Root node start player set to -1, so cannot have simulate play called on it
+
+Notes: 
+State records information about the game (e.g. what has been played)
+
+The MCTS will record information about the deal it has chosen, since
+this is specific to the MCTS. The methods will be given this information
+when called. A deal will be assigned at the start and remove all cards
+that have already been played, recorded in the state.
+
+TRICKS RECORDED AS (P1, O1, O2, O3) AND THE STARTPLAYER STORED
+
+Currently expansions are based on a simply random algorithm, the idea being that we randomly
+generate possible moves and then test them via random simulation.
+
+-------------------------------------------------------------------------------
+
 List of things to do on the hearts game:	
 
 1) Investigate whether there is a bias for order of Hearts players
@@ -5,11 +61,6 @@ List of things to do on the hearts game:
 
 2) Do some checks on the backpropagation to ensure that the scores are correct.
 	-> Remeber that a node has its own score as well as the score of the nodes below it.
-
-3) Implement UCT in implementation 1 of MCTS
-	-> http://senseis.xmp.net/?UCT for info and pseudocode
-	-> Perform tests!
-	-> How do we know it is working correctly? Results are actually worse...
 
 6) REDO THE APP FOR TESTING PURPOSES
 	-> Should be testing all values on same hands
@@ -33,10 +84,9 @@ List of things to do on the hearts game:
 
 SCHEUDLE:
 
-13th August - Have finished the 2 distinct implementations
-	-> OVERDUE
 27th August - Have 3rd implementation finished
 1st September - Finish testing environment and ALL CODING
+	-> Need to have implementatons split and ready for easy use
 15th September - First draft of final report submitted
 22nd September - Second draft of final report submitted
 3rd October - Final copy of report submitted

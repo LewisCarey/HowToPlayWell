@@ -18,7 +18,7 @@ public class State {
 
    private boolean heartsBroken;
    private int startPlayer, currentPlayer;
-   private ArrayList<Card> cardsPlayed, currentTrick;
+   private ArrayList<Card> cardsPlayed, currentTrick = null;
    private int[] scores;
    private int[] trickRecord;
    
@@ -69,6 +69,8 @@ public class State {
          suit++;
          rank = 0;
       }
+
+      System.out.println(cardsPlayed.size());
 
       // Remove the cards which have already been played
       for (Card i : cardsPlayed) {
@@ -144,6 +146,12 @@ public class State {
       return deck;
 
 
+   }
+
+   public void addCardsPlayed (ArrayList<Card> trick) {
+      for (Card i : trick) {
+         cardsPlayed.add(new Card(i.getSuit(), i.getRank()));
+      }
    }
 
 

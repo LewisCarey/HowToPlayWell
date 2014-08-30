@@ -22,6 +22,7 @@ public class ComponentTester {
     */
    public static void main(String[]args) {
 
+    /*
       int tricks = 4;
 
       ArrayList<Card> hand = new ArrayList<Card>();
@@ -52,6 +53,6 @@ public class ComponentTester {
       testState.setCurrentTrick(trick);
 
       System.out.println(DoubleDummy.PlayOut(hand, opponentsHands, testState));
-      
+      */
    }
 }

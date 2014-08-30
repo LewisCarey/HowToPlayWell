@@ -1,0 +1,8 @@
+SOME DESIGN NOTES ON THE NEXT IMPLEMENTATION:
+
+-> Where to store the information on the deal?
+	-> Since it is unique to the MCTS, store somewhere in a static variable in the actual search?
+	-> Do we make a state variable that can hold it?
+	-> Some other method?
+
+-> Expand method: two versions

@@ -268,6 +268,9 @@ public class Controller {
                }
             }
          }
+
+         // Add the cards played to the state
+         state.addCardsPlayed(state.getCurrentTrick());
          
          // Calculate who wins the trick
          int oldStartPlayer = startPlayer;

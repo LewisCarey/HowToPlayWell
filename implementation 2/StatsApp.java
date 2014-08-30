@@ -26,59 +26,66 @@ public class StatsApp {
       // Options array - 0 = Select coefficient
       int[] options = new int[1];
       
-
-      // MAIN GAME CODE HERE
-
-      int numberOfGames = 3000;
-      ArrayList<String> printResults = new ArrayList<String>();
-      for (int i = 0; i < 10; i++) {
-        printResults.add("");
-      }
       
+
       
-      for (int x = 0; x < numberOfGames; x++) {
-        ArrayList<Card> cardsPlayed = randomRemove(0);
-        State testState = new State(false, -1, cardsPlayed);
-        // Generates the hands that are shared for each round
-        ArrayList<ArrayList> hands = Controller.GenerateHands(testState);
-        int count = 0;
-        for (int c = 0; c < 50; c+=5) {
-          options[0] = c;
+     
+      // Set up the State and the Deal specific to the MCTS
+      // State - Hearts broken, start player, cards played (none)
+      State state = new State(true, -1, new ArrayList<Card>());
+      // Specific Deal:
+      ArrayList<ArrayList<Card>> deal = Controller.GenerateHands(state, null);
+    
+      // Deep copying here, do we need to?
+      Card play = new Card(deal.get(0).get(0).getSuit(), deal.get(0).get(0).getRank());
+      ArrayList<Card> trick = new ArrayList<Card>();
+      trick.add(new Card(deal.get(0).get(0).getSuit(), deal.get(0).get(0).getRank()));
+      trick.add(null);
+      trick.add(null);
+      trick.add(new Card(deal.get(3).get(0).getSuit(), deal.get(3).get(0).getRank()));
 
-          ArrayList<Player> playerType = new ArrayList<Player>();
-          playerType.add(new MCTSPlayer(options));
-          playerType.add(new RandomPlayer());
-          playerType.add(new RandomPlayer());
-          playerType.add(new RandomPlayer());
-          
-          
-          
+      
+      Card play2 = new Card(deal.get(0).get(1).getSuit(), deal.get(0).get(1).getRank());
+      ArrayList<Card> trick2 = new ArrayList<Card>();
+      trick2.add(new Card(deal.get(0).get(1).getSuit(), deal.get(0).get(2).getRank()));
+      trick2.add(new Card(deal.get(1).get(1).getSuit(), deal.get(1).get(2).getRank()));
+      trick2.add(new Card(deal.get(2).get(1).getSuit(), deal.get(2).get(2).getRank()));
+      trick2.add(new Card(deal.get(3).get(1).getSuit(), deal.get(3).get(2).getRank()));
 
-          Controller control = new Controller(testState, playerType, hands);
-        
-          
-          State results = control.playGames(1, 0, 13);
-          //State results = control.play(3, 1);
-          
-          int[] scores = results.getScores();
-          String temp = printResults.get(count);
-          for (int i = 0; i < 4; i++) {
-            temp += scores[i] + ";";
-            
-          }
-          temp += "\n";
-          printResults.set(count, temp);
-          System.err.println("END OF GAME " + x);
-          count++;
-        }
-      }
-
-      for (String i : printResults) {
+      
+      System.out.println("Trick:");
+      for (Card i : trick) {
         System.out.println(i);
       }
-      
-     }
+      /*
+      System.out.println("Trick2:");
+      for (Card i : trick2) {
+        System.out.println(i);
+      }
+      */
 
+      MCTSNode node = new MCTSNode(null, null, null, 0);
+      //MCTSNode node = new MCTSNode(play, null, trick, 0);
+      //MCTSNode node2 = new MCTSNode(play2, node, trick2, node.getWinner());
+
+      // TESTS THE EXPAND METHOD FOR ROOT NODES
+      ArrayList<MCTSNode> children = MCTS.Expand(node, state, deal, 10);
+      for (MCTSNode i : children) {
+        System.out.println(i.getTrick());
+      }
+
+      /*
+      // TESTS THE EXPAND METHOD FOR CHILD NODES
+      ArrayList<MCTSNode> children = MCTS.Expand(node2, state, deal, 10);
+      for (MCTSNode i : children) {
+        System.out.println(i.getTrick());
+      }
+      */
+      /*
+      // TESTS THE SIMULATE PLAY METHOD
+      System.out.println(MCTS.SimulatePlay(node, state, deal));
+      */
+    }
    // Returns a random assortment of cards played
   public static ArrayList<Card> randomRemove (int tricks) {
     ArrayList<Card> deck = new ArrayList<Card>();

@@ -146,6 +146,12 @@ public class State {
 
    }
 
+   public void addCardsPlayed (ArrayList<Card> trick) {
+      for (Card i : trick) {
+         cardsPlayed.add(new Card(i.getSuit(), i.getRank()));
+      }
+   }
+
 
 
 }

@@ -23,12 +23,14 @@ public class GameApp {
    public static void main(String[]args) {
 
       // Options array - 0 = Select coefficient
-      int[] options = new int[1];
+      int[] options = new int[3];
       options[0] = 20; // thresehold for mcts select
+      options[1] = 10; // Expand nodes
+      options[2] = 1000; // Timer
 
       // MAIN GAME CODE HERE
 
-      int numberOfGames = 3000;
+      int numberOfGames = 10;
 
       int[] totalScores = {0,0,0,0};
       
@@ -42,6 +44,7 @@ public class GameApp {
         playerType.add(new RandomPlayer());
         playerType.add(new RandomPlayer());
         
+        // Testing from start of a game with no tricks set
         State testState = new State(false, -1, cardsPlayed);
         
         Controller control = new Controller(testState, playerType, null);
@@ -54,9 +57,14 @@ public class GameApp {
         for (int i = 0; i < 4; i++) {
           totalScores[i] += scores[i];
         }
-        System.out.println("END OF GAME " + x);
+        System.err.println("END OF GAME " + x);
+        for (int i = 0; i < 4; i++) {
+          System.out.print(scores[i] + ";");
+        }
+        System.out.println();
       }
-      
+      System.out.println("\n\n\n\n");
+
       for (int i = 0; i < 4; i++) {
           System.out.println((double) totalScores[i] / numberOfGames);
         }

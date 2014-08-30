@@ -28,7 +28,7 @@ public class Controller {
     * The main function, sets up the player space / hearts environment.
     *
     */
-   public Controller (State state, ArrayList<Player> playerTypes, ArrayList<ArrayList> givenHands) {
+   public Controller (State state, ArrayList<Player> playerTypes, ArrayList<ArrayList<Card>> givenHands) {
       this.state = state;
 
       // Sets up the scores for each player
@@ -48,8 +48,8 @@ public class Controller {
       
 
       // Generates and assigns hands to the players based on what has already been played
-      ArrayList<ArrayList> hands;
-      if (givenHands == null) hands = GenerateHands(state);
+      ArrayList<ArrayList<Card>> hands;
+      if (givenHands == null) hands = GenerateHands(state, null);
       else hands = givenHands;
 
       // Creates the players
@@ -83,11 +83,15 @@ public class Controller {
      currentTrick = new ArrayList<Card>(4);
    }
 
-   public static ArrayList<ArrayList> GenerateHands(State state) {
+   /* Deals a random number of hands to the players based on the game state.
+    *
+    * If a hand is passed to the method, it will leave that as the players hand.
+    */
+   public static ArrayList<ArrayList<Card>> GenerateHands(State state, ArrayList<Card> hand) {
       ArrayList<Card> deck = new ArrayList<Card>();
 
       if (state != null) {
-         deck = state.getRemainingCards();
+         deck = Misc.DeepCopyTrick(state.getRemainingCards());
       } else {
          // Generate an ArrayList of 52 cards
          int suit = 0, rank = 0;
@@ -119,15 +123,37 @@ public class Controller {
       }
       
       // Assign the deck to the players
-      ArrayList<ArrayList> splitDeck = new ArrayList<ArrayList>();
-      int handSize = deck.size() / 4;
-      for (int i = 0; i < 4; i++) {
-         ArrayList<Card> temp = new ArrayList<Card>();
-         for (int z = 0; z < handSize; z++) {
-            temp.add(deck.get(i * handSize + z));
+      ArrayList<ArrayList<Card>> splitDeck = new ArrayList<ArrayList<Card>>();
+      if (hand == null || hand.size() == 0) {
+         int handSize = deck.size() / 4;
+         for (int i = 0; i < 4; i++) {
+            ArrayList<Card> temp = new ArrayList<Card>();
+            for (int z = 0; z < handSize; z++) {
+               temp.add(deck.get(i * handSize + z));
+            }
+            splitDeck.add(temp);
          }
-         splitDeck.add(temp);
+      } else {
+         // We need to preserve the hand we were passed.
+         // Deep copy it first
+         ArrayList<Card> handCopy = Misc.DeepCopyTrick(hand);
+         // Add hand to new deck
+         splitDeck.add(handCopy);
+         // Remove cards already played from the deal
+         for (int i = 0; i < handCopy.size(); i++) {
+            int index = Misc.RemoveIndex(handCopy.get(i), deck);
+            deck.remove(index);
+         }
+         // Deals out the remaining cards to the players
+         for (int i = 0; i < 3; i++) {
+            ArrayList<Card> temp = new ArrayList<Card>();
+            for (int z = 0; z < handCopy.size(); z++) {
+               temp.add(deck.get(i * handCopy.size() + z));
+            }
+            splitDeck.add(temp);
+         }
       }
+      
 
       return splitDeck;
    }
@@ -216,14 +242,14 @@ public class Controller {
          }
 
          // Generates new hands
-         ArrayList<ArrayList> hands = GenerateHands(state);
+         ArrayList<ArrayList<Card>> hands = GenerateHands(state, null);
          // Assigns new hands to the players
          players[0].setUp(0, hands.get(0), this);
          players[1].setUp(1, hands.get(1), this);
          players[2].setUp(2, hands.get(2), this);
          players[3].setUp(3, hands.get(3), this);
 
-         //System.out.println("END OF GAME " + i + "\n\n\n\n");
+         //System.out.println("END OF GAME " + i + "\n\n");
       }
 
       return new State(scores, new int[13]);
@@ -258,6 +284,9 @@ public class Controller {
          state.setCurrentTrick(currentTrick);
          currentTrick.set(players[(startPlayer+3)%4].getPosition(), players[(startPlayer+3)%4].getPlay(state));
          state.setCurrentTrick(currentTrick);
+
+         // Add the cards played to the state
+         state.addCardsPlayed(state.getCurrentTrick());
 
          // If a heart is in play that is not the first card
          if (!heartsBroken) {
@@ -304,5 +333,110 @@ public class Controller {
          System.out.println(i);
       }
       return "";
+   }
+
+   // Generates random hands with current trick information included
+   // Note: Includes cards from current trick, but assigns them to correct players.
+   public static ArrayList<ArrayList<Card>> GenerateHandsTrick(State state, ArrayList<Card> hand) {
+      ArrayList<Card> deck = new ArrayList<Card>();
+
+      if (state != null) {
+         deck = Misc.DeepCopyTrick(state.getRemainingCards());
+         //System.out.println("DECK SIZE: " + deck.size());
+      } else {
+         //System.out.println("NO STATE");
+         // Generate an ArrayList of 52 cards
+         int suit = 0, rank = 0;
+         while (suit < 4) {
+            while (rank < 13) {
+               Card tempCard = new Card(suit, rank);
+               deck.add(tempCard);
+               rank++;
+            }
+            suit++;
+            rank = 0;
+         }
+      }
+      
+      // Randomises the array
+      Random rand = new Random();
+      int randomNum;
+      Card tempCard;
+
+      // Remove cards that are already played in the trick
+      for (int i = 0; i < state.getCurrentTrick().size(); i++) {
+         if (state.getCurrentTrick().get(i) != null) {
+            int index = Misc.RemoveIndex(state.getCurrentTrick().get(i), deck);
+            deck.remove(index);
+         }
+      }
+
+      // Shuffle the deck
+      // For each index in the deck starting at the last and decrementing
+      for(int i = deck.size() - 1; i > 0; i--) {
+         // Pick a card from the remainding deck
+         randomNum = rand.nextInt(i + 1);
+         // Swap the card at the end for the random number card
+         tempCard = deck.get(i);
+         deck.set(i, deck.get(randomNum));
+         deck.set(randomNum, tempCard);
+      }
+
+      // At this point all cards that are in play or have been played are removed from the trick,
+      // and the trick has been randomised.
+      ArrayList<ArrayList<Card>> splitDeck = new ArrayList<ArrayList<Card>>();
+      // If we want to keep our hand...
+      if (hand == null || hand.size() == 0) {
+         // Assign the deck to the players
+         splitDeck.add(new ArrayList<Card>());
+         splitDeck.add(new ArrayList<Card>());
+         splitDeck.add(new ArrayList<Card>());
+         splitDeck.add(new ArrayList<Card>());
+
+         int count = 0;
+         while (deck.size() > 0) {
+            splitDeck.get(count % 4).add(new Card(deck.get(0).getSuit(), deck.get(0).getRank()));
+            deck.remove(0);
+            count++;
+         }
+      } else {
+         // Maintain the first players hand
+         // We need to preserve the hand we were passed.
+         // Deep copy it first
+         ArrayList<Card> handCopy = Misc.DeepCopyTrick(hand);
+         // Add hand to new deck
+         splitDeck.add(handCopy);
+         splitDeck.add(new ArrayList<Card>());
+         splitDeck.add(new ArrayList<Card>());
+         splitDeck.add(new ArrayList<Card>());
+         // Remove cards already played from the deal
+         for (int i = 0; i < handCopy.size(); i++) {
+            int index = Misc.RemoveIndex(handCopy.get(i), deck);
+            deck.remove(index);
+         }
+         // Deals out the remaining cards to the players
+         int count = 0;
+         while (deck.size() > 0) {
+            splitDeck.get((count % 3) + 1).add(new Card(deck.get(0).getSuit(), deck.get(0).getRank()));
+            deck.remove(0);
+            count++;
+         }
+      }
+      
+      
+      // Issue out the cards again based on the start player
+      // Find the start player
+      int startPlayer;
+      for (startPlayer = 0; startPlayer < 4; startPlayer++) {
+         if (state.getCurrentTrick().get(startPlayer) != null) break;
+      }
+
+      // Deal out cards to the players
+      for (int i = startPlayer; i < 4; i++) {
+         splitDeck.get(i).add(new Card(state.getCurrentTrick().get(i).getSuit(), state.getCurrentTrick().get(i).getRank()));
+      }
+      
+
+      return splitDeck;
    }
 }
