@@ -48,12 +48,20 @@ public class MCTS {
       // CONSTRUCTS AND SEARCHES THE TREE
       // while (has time)
       int timer = 0;
+      int maxDepth = 0;
       while (timer < 10000) {
          int depth = 0;
+         
          // current node <-- root node
          currentNode = rootNode;
          // Assign prevNode to currentNode, used in the case of examining the root
          prevNode = currentNode;
+
+         /* ------------------------------------------------------------------------------------------------------
+         // Choosing when to stop selecting
+         // Can do this way: aka when we reach a leaf node...
+         ------------------------------------------------------------------------------------------------------ */
+         /*
          // while (current node is within the State aka has children)
          while (currentNode.getNumberChildren() != 0) {
             // prev node <-- current node
@@ -63,16 +71,50 @@ public class MCTS {
             depth++;
          }
          
-         //System.out.println("Expanding at depth: " + depth);
+         System.out.println("Exploring at depth: " + depth);
 
          // prev node <-- expand(prev node)
          currentNode.assignChildren(Expand(currentNode, state, hand));
-         /*
-         System.out.println("PREV " + prevNode);
-         System.out.println("CURR " + currentNode);
-         System.out.println("Children = " + Expand(currentNode, state, hand));
          */
-         // R <-- play_simulated_game(prev node)
+         /* ------------------------------------------------------------------------------------------------------
+         // Choosing when to stop selecting
+         // Can re-explore non-leaf nodes. The higher the depth, the further down we wish to explore
+         ------------------------------------------------------------------------------------------------------ */
+         
+         // First case - root must be expanded
+         // Stops either based on a probability, or when there are no more children
+         // while (current node is within the State aka has children)
+         Random rand = new Random();
+         while (timer != 0 && currentNode.getNumberChildren() != 0) {
+            // prev node <-- current node
+            prevNode = currentNode;
+            // current node <-- Select(current_node)
+            currentNode = currentNode.getChildren().get(Select(currentNode, options[0]));
+            depth++;
+            //System.out.println("Exploring");
+            // Probability of stopping
+            double breakCase = rand.nextDouble();
+            //System.out.println(breakCase + " " + (double)depth/(double)maxDepth);
+            if (breakCase <= (double)depth/(double)maxDepth) break;
+         }
+         //System.out.println("broke");
+         
+         //System.out.println("Expanding at depth: " + depth);
+         // Only expands if we have not already expanded, otherwise it just plays out a game
+         // prev node <-- expand(prev node)
+         if (currentNode.getNumberChildren() == 0) {
+            currentNode.assignChildren(Expand(currentNode, state, hand));
+            // If we were at max depth, we are increasing it
+            //System.out.println("Expanding!" + depth + " " + maxDepth);
+            if (depth == maxDepth) maxDepth++;
+
+         }
+
+         //System.out.println("Exploring at depth: " + depth + " with Max Depth: " + maxDepth);
+         
+
+
+
          
          // Must take into account the current trick from the state!
          if (verbose) System.out.println("Exploring a node with count: " + timer + " \n\n");
@@ -102,7 +144,7 @@ public class MCTS {
       System.out.println(rootNode);*/
 
       // Return the best move specified in tree
-      // To do this, simply look at the highest score on the first depth
+      // To do this, simply look at the LOWEST score on the first depth
       MCTSNode max = rootNode.getChildren().get(0);
       for (MCTSNode i : rootNode.getChildren()) {
          if (i.getAverageScore() < max.getAverageScore()) {
@@ -119,6 +161,7 @@ public class MCTS {
       }
       //System.out.println("The best move is :  " + max.getPlay());
 
+      /*
       // Find midway point for root node
       ArrayList<MCTSNode> children = rootNode.getChildren();
       // Find the total length
@@ -149,7 +192,7 @@ public class MCTS {
       
       // Iterates down the tree
       //MCTS.Iterate(rootNode.getChildren(), 0);
-      
+      */
       return max.getPlay();
 
    }

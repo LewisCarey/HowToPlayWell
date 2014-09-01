@@ -30,7 +30,7 @@ public class StatsApp {
 
       // MAIN GAME CODE HERE
 
-      int numberOfGames = 3000;
+      int numberOfGames = 1500;
       ArrayList<String> printResults = new ArrayList<String>();
       for (int i = 0; i < 10; i++) {
         printResults.add("");

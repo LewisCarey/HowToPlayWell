@@ -1,18 +1,27 @@
-TODO 30/08:
+TODO:
+
 -> Aim is to have all coding completed (or near to it) by end of tomorrow
 	-> Make easy ways to test the different methods
 	-> Once methods have been fully tested, we need all the players in one program
 	-> Set up the testing environment (data collection etc) so that we can run it on multiple computers
+	-> Even if programs seem to be not as good as they could be (e.g. Implementation 1) you will still need
+	   to build the testing environments and get the report started.
 
 -> Begin write up of final report - we want first draft done in 2 weeks
 	-> Get the different sections of the report outlined
 	-> See what you can / can't include in the report
+	-> Read through paper "an analysis of UCT in multiplayer games" - especially the Hearts section
 
+-> Are we testing more than the three players? Are we including trials of the different methods of doing things?
 -------------------------------------------------------------------------------
 
 Current Goals:
 
+-> Testing the tournament
+	-> Make it work with just random, basic, and advanced players
+
 -> Keep testing that results are good!
+	-> Will need to go over implementation 1, it keeps returning worse values
 
 -> IMPLEMENTATIONS HAVE A BIG FLAW!!!!! - if changing, do it SEPARATLY! Keep the old code!
 	-> It will SELECT down to a leaf node, and then perform a simulation. This does not work in this implementation,
