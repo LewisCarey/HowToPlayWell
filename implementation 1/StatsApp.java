@@ -24,8 +24,9 @@ public class StatsApp {
    public static void main(String[]args) {
 
       // Options array - 0 = Select coefficient
-      int[] options = new int[1];
+      int[] options = new int[3];
       options[0] = 20;
+      options[2] = 100000;
       
 
       // MAIN GAME CODE HERE

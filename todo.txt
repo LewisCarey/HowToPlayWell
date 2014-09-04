@@ -13,12 +13,21 @@ TODO:
 	-> Read through paper "an analysis of UCT in multiplayer games" - especially the Hearts section
 
 -> Are we testing more than the three players? Are we including trials of the different methods of doing things?
+
+-> Have a go at fixing the changes Micahel suggested in your implementation write up
 -------------------------------------------------------------------------------
 
 Current Goals:
 
--> Testing the tournament
-	-> Make it work with just random, basic, and advanced players
+-> Improving implementation 2
+	-> Make it so that the Select method doesn't always choose a leaf node
+	-> Ensure that the assign children is adding, not overwriting
+	-> Maybe leave till later? Get other things up and running first, since this algorithm is working well.
+
+-> Implement the BASIC PLAYER
+	-> Just play highest card possible that will not win the trick?
+	-> Compare basic player and advanced player
+	-> Maybe make a bit worse? Performing similar to the Advanced player
 
 -> Keep testing that results are good!
 	-> Will need to go over implementation 1, it keeps returning worse values
@@ -36,6 +45,8 @@ Current Goals:
 
 -> Need to find another unit of measurement than 10seconds, because this varies wildly based between computers.
 	-> Maybe number of separate MCTS performed?
+	-> Ask Michael. If not using time you can also experiment with changing settings much easier.
+		-> Could always see what 10 seconds gives to the algorithm, and then hard code that
 
 -> TESTING
 	-> Test the Controller.Generate... methods
@@ -108,9 +119,7 @@ List of things to do on the hearts game:
 
 SCHEUDLE:
 
-27th August - Have 3rd implementation finished
-1st September - Finish testing environment and ALL CODING
-	-> Need to have implementatons split and ready for easy use
+8th September - All implementations / coding done
 15th September - First draft of final report submitted
 22nd September - Second draft of final report submitted
 3rd October - Final copy of report submitted
@@ -141,11 +150,6 @@ Include a paragraph of some general findings / decisions regarding...
 	-> Amount of time given to the MCTS algorithm
 
 Include in future work a discussion on the advantages of card counting / more soft information, since your focus was not on that.
-
--------------------------------------------------------------------------------
-
-AFTER FIRST METHOD TESTING:
-Since the end of the first implementation is approaching, we have to consider what implementation will be implemented next. After some testing / discussion with Michael Albert, coding for the second implementation should begin.
 
 -------------------------------------------------------------------------------
 

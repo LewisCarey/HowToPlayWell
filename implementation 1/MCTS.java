@@ -49,7 +49,7 @@ public class MCTS {
       // while (has time)
       int timer = 0;
       int maxDepth = 0;
-      while (timer < 10000) {
+      while (timer < options[2]) {
          int depth = 0;
          
          // current node <-- root node

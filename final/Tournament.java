@@ -50,6 +50,11 @@ public class Tournament {
         writers.add(writer_mcts_zero);
         writers.add(writer_mcts_one);
         writers.add(writer_mcts_two);
+
+        int[] options = new int[3];
+        options[0] = 20; // thresehold for mcts select
+        options[1] = 10; // Expand nodes
+        options[2] = 1000; // Timer
         
         // Holds the teams
         ArrayList<ArrayList<Player>> teams = new ArrayList<ArrayList<Player>>();
@@ -72,21 +77,21 @@ public class Tournament {
         team_advanced.add(new RandomPlayer());
         team_advanced.add(new RandomPlayer());
         team_advanced.add(new RandomPlayer());
-
+/*
         ArrayList<Player> team_mcts_zero = new ArrayList<Player>();
-        team_mcts_zero.add(new MCTSZeroPlayer());
+        team_mcts_zero.add(new MCTSPlayer());
         team_mcts_zero.add(new RandomPlayer());
         team_mcts_zero.add(new RandomPlayer());
         team_mcts_zero.add(new RandomPlayer());
 
         ArrayList<Player> team_mcts_one = new ArrayList<Player>();
-        team_mcts_one.add(new MCTSOnePlayer());
+        team_mcts_one.add(new MCTSPlayer_one());
         team_mcts_one.add(new RandomPlayer());
         team_mcts_one.add(new RandomPlayer());
         team_mcts_one.add(new RandomPlayer());
-
+*/
         ArrayList<Player> team_mcts_two = new ArrayList<Player>();
-        team_mcts_two.add(new MCTSTwoPlayer());
+        team_mcts_two.add(new MCTSPlayer_two(options));
         team_mcts_two.add(new RandomPlayer());
         team_mcts_two.add(new RandomPlayer());
         team_mcts_two.add(new RandomPlayer());
@@ -95,15 +100,14 @@ public class Tournament {
         teams.add(team_random);
         teams.add(team_basic);
         teams.add(team_advanced);
-        teams.add(team_mcts_zero);
-        teams.add(team_mcts_one);
+        //teams.add(team_mcts_zero);
+        //teams.add(team_mcts_one);
         teams.add(team_mcts_two);
 
         // Play out the games, generating a new deal / state each time
         int countOfGames = 0;
         // Set up the options
-        int[] options = new int[1];
-        while (countOfGames < 10000) {
+        while (countOfGames < 5000) {
 
           State state = new State(true, -1, new ArrayList<Card>());
           ArrayList<ArrayList<Card>> deal = Controller.GenerateHands(state, null);
@@ -116,17 +120,21 @@ public class Tournament {
 
           // Testing the playout
           for (int i = 0; i < 3; i++) {
-            Controller control = new Controller(testState, teams.get(i), null);
+            state.resetCardsPlayed();
+            Controller control = new Controller(state, teams.get(i), null);
 
             State results = control.playGames(1, 0, 13);
             
             int[] scores = results.getScores();
 
-            System.err.println("END OF GAME " + x + " for player " + i);
-            for (int i = 0; i < 4; i++) {
-              System.out.print(scores[i] + ";");
+            System.err.println("END OF GAME " + countOfGames + " for player " + i);
+            for (int x = 0; x < 4; x++) {
+
+              writers.get(i).write(scores[x] + ";");
+
             }
-            System.out.println();
+            writers.get(i).newLine();
+            writers.get(i).flush();
 
           }
 
