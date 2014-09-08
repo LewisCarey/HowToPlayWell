@@ -108,23 +108,19 @@ public class Tournament {
 
           // Repeat the playouts for each configuration of the teams
           for (int y = 0; y < 4; y++) {
-            // Swap around the order of the players
-            // Testing the playout
-            for (int i = 0; i < teams.size(); i++) {
-              // ENABLE SWAPPING OF ORDER
-              /*
-              // Hold the player
-              Player tempPlayer = teams.get(i).get(0);
-              // Remove player from teams array
-              teams.get(i).remove(0);
-              // Add it on to the end again
-              teams.get(i).add(tempPlayer);
+            // ENABLE SWAPPING OF HANDS
+            // Hold the hand
+            ArrayList<Card> tempHand = deal.get(0);
+            // Remove player from teams array
+            deal.remove(0);
+            // Add it on to the end again
+            deal.add(tempHand);
 
-              System.out.println(teams.get(i));
-              */
+            // Testing the playout
+            for (int i = 0; i < 3; i++) {
 
               state.resetCardsPlayed();
-              Controller control = new Controller(state, teams.get(i), null);
+              Controller control = new Controller(state, teams.get(i), deal);
 
               State results = control.playGames(1, 0, 13);
               

@@ -1,15 +1,16 @@
 TODO:
 
 -> Do your 412 assignment
+	-> Write up done, waiting on David to reply
 
 -> Check out the datacom task
 
 -> Get something done for Michael
 
--> Finish the first tournament environment
-	-> Need to account for changing order of players (AdvancedPlayer and MCTS_two)
-
--> Implement BasicPlayer - maybe just avoid all cards?
+-> TWO MORE THINGS TO DO BEFORE TESTING!!!
+	-> Basic player
+	-> Advanced player
+	-> Brainstorm ideas - go over with Michael on Wednesday
 
 -> REPORT
 	-> While running tests on your programs, do some report stuff...

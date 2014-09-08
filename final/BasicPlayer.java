@@ -75,7 +75,9 @@ public class BasicPlayer implements Player  {
       Card tempCard = legalHands.get(0);
       // Find out the player we are in the trick
       int player = 0;
+
       if (state.getCurrentTrick() != null) player = Misc.RealSize(state.getCurrentTrick());
+
       if (player == 0) {
          // If starting player, open with lowest card
          for (Card i : legalHands) {
@@ -85,10 +87,22 @@ public class BasicPlayer implements Player  {
          }  
       } else {
          // Last player
+
          // Check to see if we still have the suit
          boolean playingToSuit = false;
          //System.out.println(state.getCurrentTrick());
 
+         /*
+         // Gets the trump suit
+         int trumpSuit = -1;
+         for (Card i : state.getCurrentTrick()) {
+            if (i != null) {
+               trumpSuit = i.getSuit();
+               break;
+            }
+         }
+         */
+         
          int trumpSuit;
          if (Misc.RealSize(state.getCurrentTrick()) == 1) {
             trumpSuit = state.getCurrentTrick().get(3).getSuit();
@@ -97,6 +111,7 @@ public class BasicPlayer implements Player  {
          } else {
             trumpSuit = state.getCurrentTrick().get(1).getSuit();
          }
+         
 
 
          for (Card i : legalHands) {

@@ -87,12 +87,24 @@ public class AdvancedPlayer implements Player  {
          // If the 2nd or 3rd player
          // Check to see if we still have the suit
          boolean playingToSuit = false;
+         /*
+         // Gets the trump suit
+         int trumpSuit = -1;
+         for (Card i : state.getCurrentTrick()) {
+            if (i != null) {
+               trumpSuit = i.getSuit();
+               break;
+            }
+         }
+         */
+         
          int trumpSuit;
          if (Misc.RealSize(state.getCurrentTrick()) == 1) {
             trumpSuit = state.getCurrentTrick().get(3).getSuit();
          } else {
             trumpSuit = state.getCurrentTrick().get(2).getSuit();
          }
+         
             
 
          for (Card i : legalHands) {
@@ -130,17 +142,35 @@ public class AdvancedPlayer implements Player  {
             
 
          } else {
-            // If we are not playing to suit, unload QoS or our highest card
-            for (Card i : legalHands) {
-               if (i.getRank() > tempCard.getRank()) {
-                  tempCard = i;
-               }
-            }
+            // If we are not playing to suit, unload QoS or our highest card from smallest suit
             // Check to see if we have QoS
             for (Card i : legalHands) {
                if (i.getSuit() == 1 && i.getSuit() == 10) {
                   tempCard = i;
                   break;
+               }
+            }
+            // If not, highest card from smallest suit
+            // Find smallest suit
+            int[] suitCount = {0, 0, 0, 0}; // Hearts, Spades, Diamonds, Clubs
+            for (Card i : legalHands) {
+               suitCount[i.getSuit()] += 1;
+            }
+            int min = 0;
+            for (int i = 0; i < 4; i++) {
+               if (suitCount[i] < suitCount[min]) min = i;
+            }
+            // Max now represents the smallest suit
+            // Set the temp card
+            for (Card i : legalHands) {
+               if (i.getSuit() == min) {
+                  tempCard = i;
+                  break;
+               }
+            }
+            for (Card i : legalHands) {
+               if (i.getSuit() == min && i.getRank() > tempCard.getRank()) {
+                  tempCard = i;
                }
             }
 
@@ -151,7 +181,18 @@ public class AdvancedPlayer implements Player  {
          // Check to see if we still have the suit
          boolean playingToSuit = false;
          //System.out.println(state.getCurrentTrick());
+         /*
+         // Gets the trump suit
+         int trumpSuit = -1;
+         for (Card i : state.getCurrentTrick()) {
+            if (i != null) {
+               trumpSuit = i.getSuit();
+               break;
+            }
+         }
+         */
          int trumpSuit = state.getCurrentTrick().get(1).getSuit();
+         
          for (Card i : legalHands) {
             if (i.getSuit() == trumpSuit) {
                playingToSuit = true;
@@ -204,17 +245,35 @@ public class AdvancedPlayer implements Player  {
             }
 
          } else {
-            // If we are not playing to suit, unload QoS or our highest card
-            for (Card i : legalHands) {
-               if (i.getRank() > tempCard.getRank()) {
-                  tempCard = i;
-               }
-            }
+            // If we are not playing to suit, unload QoS or our highest card from smallest suit
             // Check to see if we have QoS
             for (Card i : legalHands) {
                if (i.getSuit() == 1 && i.getSuit() == 10) {
                   tempCard = i;
                   break;
+               }
+            }
+            // If not, highest card from smallest suit
+            // Find smallest suit
+            int[] suitCount = {0, 0, 0, 0}; // Hearts, Spades, Diamonds, Clubs
+            for (Card i : legalHands) {
+               suitCount[i.getSuit()] += 1;
+            }
+            int min = 0;
+            for (int i = 0; i < 4; i++) {
+               if (suitCount[i] < suitCount[min]) min = i;
+            }
+            // Max now represents the smallest suit
+            // Set the temp card
+            for (Card i : legalHands) {
+               if (i.getSuit() == min) {
+                  tempCard = i;
+                  break;
+               }
+            }
+            for (Card i : legalHands) {
+               if (i.getSuit() == min && i.getRank() > tempCard.getRank()) {
+                  tempCard = i;
                }
             }
 
