@@ -61,6 +61,8 @@ public class BasicPlayer implements Player  {
 
    // Consider getting rid of one suit
    public Card getPlay(State state) {
+      //return hand.get(0);
+      
       // Have to deep copy the hand for this to work
       ArrayList<Card> tempHand = new ArrayList<Card>();
       for (Card i : hand) {
@@ -167,6 +169,7 @@ public class BasicPlayer implements Player  {
 
       hand.remove(index);
       return tempCard;
+      
    }
 
    public boolean getStart() {

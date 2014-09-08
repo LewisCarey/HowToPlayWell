@@ -273,17 +273,21 @@ public class Controller {
          }
          
          if(reporting != 0) System.out.println("STARTING TRICK NUMBER " + i + " --------------");
-         //System.out.println(players[0] + "\n" +players[1] + "\n" +players[2] + "\n" +players[3]);
+         System.out.println(players[0] + "\n" +players[1] + "\n" +players[2] + "\n" +players[3]);
          // Each player plays a card
          currentTrick.set(startPlayer, players[startPlayer].getPlay(state));
+         System.out.println("TRICK : " + currentTrick);
          trickInPlay = true;
          currentSuit = currentTrick.get(startPlayer).getSuit();
          state.setCurrentTrick(currentTrick);
          currentTrick.set(players[(startPlayer+1)%4].getPosition(), players[(startPlayer+1)%4].getPlay(state));
+         System.out.println("TRICK : " + currentTrick);
          state.setCurrentTrick(currentTrick);
          currentTrick.set(players[(startPlayer+2)%4].getPosition(), players[(startPlayer+2)%4].getPlay(state));
+         System.out.println("TRICK : " + currentTrick);
          state.setCurrentTrick(currentTrick);
          currentTrick.set(players[(startPlayer+3)%4].getPosition(), players[(startPlayer+3)%4].getPlay(state));
+         System.out.println("TRICK : " + currentTrick);
          state.setCurrentTrick(currentTrick);
 
          // Add the cards played to the state

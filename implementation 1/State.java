@@ -69,7 +69,6 @@ public class State {
          suit++;
          rank = 0;
       }
-
       // Remove the cards which have already been played
       for (Card i : cardsPlayed) {
          int x = 0;
@@ -116,9 +115,22 @@ public class State {
 
       ArrayList<Card> deleteList = new ArrayList<Card>();
 
+      //System.out.println("Hand " + candidates);
+      //System.out.println("Trick " + currentTrick);
+      
+
       // If we have a current trick in play
       if (currentTrick != null && Misc.RealSize(currentTrick) != 0) {
          // Find the trump suit
+         if (trumpSuit == -1) {
+            // Trump suit was not given to us, we have to find it
+            for (Card i : currentTrick) {
+               if (i != null) {
+                  trumpSuit = i.getSuit();
+                  break;
+               }
+            }
+         }
          //int trumpSuit = currentTrick.get(0).getSuit();
          // If there is a card of that suit among the candidates, delete all other cards not of that suit
          boolean suitPresent = false;
@@ -141,6 +153,7 @@ public class State {
          deck.remove(i);
       }
 
+      //System.out.println("Legal Hands " + deck);
       return deck;
 
 

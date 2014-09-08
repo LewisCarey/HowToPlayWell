@@ -431,7 +431,7 @@ public class Controller {
       for (startPlayer = 0; startPlayer < 4; startPlayer++) {
          if (state.getCurrentTrick().get(startPlayer) != null) break;
       }
-
+      
       // Deal out cards to the players
       for (int i = startPlayer; i < 4; i++) {
          splitDeck.get(i).add(new Card(state.getCurrentTrick().get(i).getSuit(), state.getCurrentTrick().get(i).getRank()));

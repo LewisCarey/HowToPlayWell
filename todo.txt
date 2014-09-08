@@ -1,20 +1,26 @@
 TODO:
 
--> Aim is to have all coding completed (or near to it) by end of tomorrow
-	-> Make easy ways to test the different methods
-	-> Once methods have been fully tested, we need all the players in one program
-	-> Set up the testing environment (data collection etc) so that we can run it on multiple computers
-	-> Even if programs seem to be not as good as they could be (e.g. Implementation 1) you will still need
-	   to build the testing environments and get the report started.
+-> Do your 412 assignment
 
--> Begin write up of final report - we want first draft done in 2 weeks
-	-> Get the different sections of the report outlined
-	-> See what you can / can't include in the report
-	-> Read through paper "an analysis of UCT in multiplayer games" - especially the Hearts section
+-> Check out the datacom task
 
--> Are we testing more than the three players? Are we including trials of the different methods of doing things?
+-> Get something done for Michael
 
--> Have a go at fixing the changes Micahel suggested in your implementation write up
+-> Finish the first tournament environment
+	-> Need to account for changing order of players (AdvancedPlayer and MCTS_two)
+
+-> Implement BasicPlayer - maybe just avoid all cards?
+
+-> REPORT
+	-> While running tests on your programs, do some report stuff...
+	-> 1) Fix up what Michael suggested in your implementations write up.
+	-> 2) Add a write up for implementation 2
+	-> 3) Fix your interim report
+	-> 4) Put everything together into a final report doc
+	-> 5) Write detailed notes / plans for other sections
+
+-> Read through paper "an analysis of UCT in multiplayer games" - especially the Hearts section
+
 -------------------------------------------------------------------------------
 
 Current Goals:
@@ -28,51 +34,6 @@ Current Goals:
 	-> Just play highest card possible that will not win the trick?
 	-> Compare basic player and advanced player
 	-> Maybe make a bit worse? Performing similar to the Advanced player
-
--> Keep testing that results are good!
-	-> Will need to go over implementation 1, it keeps returning worse values
-
--> IMPLEMENTATIONS HAVE A BIG FLAW!!!!! - if changing, do it SEPARATLY! Keep the old code!
-	-> It will SELECT down to a leaf node, and then perform a simulation. This does not work in this implementation,
-	   as trick records are not stored. So you are randomly removing heaps of information and only really simulating
-	   out the final trick!
-	-> Need to have some way to simulate at different nodes, not just leaf nodes!!
-	-> FIND A FIX FOR THIS!!!!!! We are not collecting much information. Simulations need to be spread throughout the tree.
-	-> Is this an issue for the other type? Maybe not as much, BUT STILL THINK ABOUT IT!!! We may only ever be expanding
-	   at a non leaf node once... so we need to fix this!
-	
--> Check that implementation 1 is only playing legal hands (actually print some code to test!)
-
--> Need to find another unit of measurement than 10seconds, because this varies wildly based between computers.
-	-> Maybe number of separate MCTS performed?
-	-> Ask Michael. If not using time you can also experiment with changing settings much easier.
-		-> Could always see what 10 seconds gives to the algorithm, and then hard code that
-
--> TESTING
-	-> Test the Controller.Generate... methods
-	-> Test the expand method only expanding legal plays
-	-> Expand has been "fixed" - needs testing! Are we including right cards? Expanding where we should? Not looping?
-
--> Getting the other methods sorted
-	-> I think implementation 1 is fine, but keep looking at notes below...
-	-> Expansion WILL need redone in previous implementations so they take into account cards already played!!!	
-		-> And be sure you are always retaining the players hand!!!
-		-> Test anywhere hands need to be generated. This bug is critical and needs a solution!!!
-		-> Afterwards test your programs again for any improvements!!!
-
--> Build the Simulate Play method for the 2nd implementation
-	-> Make sure scores are being applied correctly to nodes and things.
-
--> More DoubleDummy information in PlayOut method?
-
--> Expansion method:
-	-> Assigning the children to the node needs to append (not replace)
-		-> Will also need to check against duplicates
-	-> Need to find a way to keep / generate a deal at the beginning of the MCTS
-	-> Maybe do the actual expand method first
-	-> Root node needs to be assigned the initial trick (could be empty or upto 3 cards)
-		-> Trick needs to have filler null nodes when passed to MCTS search	
-		-> Root node start player set to -1, so cannot have simulate play called on it
 
 Notes: 
 State records information about the game (e.g. what has been played)

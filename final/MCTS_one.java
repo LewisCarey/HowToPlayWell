@@ -28,7 +28,7 @@ import java.util.*;
  * @author Lewis Carey
  */
 
-public class MCTS {
+public class MCTS_one {
 
    private static boolean verbose = false;
    private static boolean visualise = false;
@@ -42,7 +42,7 @@ public class MCTS {
 
       // Decrease the time spent exploring relative to the trick we are in
       int trickNumber = 13 - hand.size();
-      explorationDepth = explorationDepth - (10000 * trickNumber);
+      //explorationDepth = explorationDepth - (10000 * trickNumber);
 
       //System.out.println(hand);
       //if (state.getCurrentTrick() == null) return null;
@@ -54,7 +54,7 @@ public class MCTS {
       MCTSNode currentNode, rootNode, prevNode = null;
 
       // Interprets the state and sets the initial variables
-      rootNode = new MCTSNode(null, null);
+      rootNode = new MCTSNode_one(null, null);
 
       // CONSTRUCTS AND SEARCHES THE TREE
       // while (has time)
@@ -282,7 +282,7 @@ public class MCTS {
       // Create nodes based on legal plays
       ArrayList<MCTSNode> tempChildren = new ArrayList<MCTSNode>();
       for (Card i : legalPlays) {
-         tempChildren.add(new MCTSNode(i, node));
+         tempChildren.add(new MCTSNode_one(i, node));
       }
 
       return tempChildren;
@@ -396,9 +396,9 @@ public class MCTS {
       //if (state.getCurrentTrick() != null && state.getCurrentTrick().size() > 0) {
       // Avoid considering state when we are of depth greater than first children
       if (state.getCurrentTrick() != null && state.getCurrentTrick().size() > 0 && (node.getParent() != null && node.getParent().getPlay() == null)) {
-         win = DoubleDummy.PlayOut(copyOfHand, opponentsHands, state);
+         win = DoubleDummy_one.PlayOut(copyOfHand, opponentsHands, state);
       } else {
-         win = DoubleDummy.PlayOut(copyOfHand, opponentsHands);
+         win = DoubleDummy_one.PlayOut(copyOfHand, opponentsHands);
       }
       
       

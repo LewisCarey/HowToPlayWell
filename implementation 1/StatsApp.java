@@ -25,16 +25,16 @@ public class StatsApp {
 
       // Options array - 0 = Select coefficient
       int[] options = new int[3];
-      options[0] = 20;
-      options[2] = 100000;
+      options[0] = 10;
+      options[2] = 200000;
       
 
       // MAIN GAME CODE HERE
 
-      int numberOfGames = 1500;
+      int numberOfGames = 1000;
       ArrayList<String> printResults = new ArrayList<String>();
       for (int i = 0; i < 10; i++) {
-        printResults.add("");
+        printResults.add(""); 
       }
       
       

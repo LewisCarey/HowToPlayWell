@@ -251,12 +251,16 @@ public class Controller {
          currentTrick.set(startPlayer, players[startPlayer].getPlay(state));
          trickInPlay = true;
          currentSuit = currentTrick.get(startPlayer).getSuit();
+         //System.out.println("TRICK : " + currentTrick);
          state.setCurrentTrick(currentTrick);
          currentTrick.set(players[(startPlayer+1)%4].getPosition(), players[(startPlayer+1)%4].getPlay(state));
+         //System.out.println("TRICK : " + currentTrick);
          state.setCurrentTrick(currentTrick);
          currentTrick.set(players[(startPlayer+2)%4].getPosition(), players[(startPlayer+2)%4].getPlay(state));
+         //System.out.println("TRICK : " + currentTrick);
          state.setCurrentTrick(currentTrick);
          currentTrick.set(players[(startPlayer+3)%4].getPosition(), players[(startPlayer+3)%4].getPlay(state));
+         //System.out.println("TRICK : " + currentTrick);
          state.setCurrentTrick(currentTrick);
 
          // If a heart is in play that is not the first card

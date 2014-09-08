@@ -2,16 +2,14 @@ import java.util.*;
 
 import java.util.*;
 
-public class MCTSPlayer implements Player {
+public class MCTSPlayer_one implements Player {
 
    private ArrayList<Card> hand = new ArrayList<Card>();
    private int position;
    private Controller controller;
    private int[] options;
 
-   private boolean verbose = false;
-
-   public MCTSPlayer (int[] options) {
+   public MCTSPlayer_one (int[] options) {
       this.options = options;
    }
 
@@ -77,62 +75,23 @@ public class MCTSPlayer implements Player {
          tempHand.add(i);
       }
       
-      // Find out what is legal to play - We use this as our hand
+      // Find out what is legal to play
       //ArrayList<Card> legalHands = controller.getLegalHands(tempHand);
       
-      // Create a score based system for these possible plays
-      ArrayList<Integer> scores = new ArrayList<Integer>();
-      for (int i = 0; i < tempHand.size(); i++) {
-         scores.add(0);
-      }
-
-      long startTime = System.nanoTime();
-
-      if (verbose) {
-         System.out.println("Starting Hand:\n\n");
-         for (Card hand : tempHand) {
-            System.out.println(hand);
-         }
-      }
-      
-      long endTime = System.nanoTime();
-      int count = 0;
-      // While there is still time remaining, keep searching
-      //while (((endTime - startTime)/1000000000) < 1) { // Is this seconds?
-      while (count < 100) {
-         // Find the card
-         Card tempCard = MCTS.search(state, tempHand, options);
-         if (verbose) System.out.println("Performed MCTS: " + tempCard);
-         count++;
-         // Update scores
-         for (int i = 0; i < tempHand.size(); i++) {
-            if (tempHand.get(i).match(tempCard)) {
-               scores.set(i, scores.get(i) + 1);
-               //System.out.println("MATCH");
-            }
-         }
-         endTime = System.nanoTime();
-      }
-
-      if (verbose) System.out.println("Searched " + count + " MCTS trees.");
-
-      // Calculate what card was most successful
-      int max = 0;
-      for (int i = 0; i < tempHand.size(); i++) {
-         if (scores.get(i) > scores.get(max)) max = i;
-      }
-      Card winningCard = tempHand.get(max);
+      // Play a card based on a MCTS with this hand
+      //Card tempCard = MCTS.search(state, legalHands, options);
+      Card tempCard = MCTS_one.search(state, tempHand, options);
 
       // Find the card to remove
       int index = 0;
       for (int i = 0; i < hand.size(); i++) {
-         if (hand.get(i).match(winningCard)) index = i;
+         if (hand.get(i).match(tempCard)) index = i;
       }
-      if (verbose) System.out.println("Playing: " + hand.get(index));
-      hand.remove(index);
 
-      System.out.println("PLAYING: " + winningCard);
-      return winningCard;
+      hand.remove(index);
+      return tempCard;
    }
+
+
    
 }

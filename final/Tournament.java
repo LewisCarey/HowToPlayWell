@@ -31,14 +31,12 @@ public class Tournament {
         File file_random = new File("output_random.txt");
         File file_basic = new File("output_basic.txt");
         File file_advanced = new File("output_advanced.txt");
-        File file_mcts_zero = new File("output_mcts_zero.txt");
         File file_mcts_one = new File("output_mcts_one.txt");
         File file_mcts_two = new File("output_mcts_two.txt");
 
         BufferedWriter writer_random = new BufferedWriter(new FileWriter(file_random));
         BufferedWriter writer_basic = new BufferedWriter(new FileWriter(file_basic));
         BufferedWriter writer_advanced = new BufferedWriter(new FileWriter(file_advanced));
-        BufferedWriter writer_mcts_zero = new BufferedWriter(new FileWriter(file_mcts_zero));
         BufferedWriter writer_mcts_one = new BufferedWriter(new FileWriter(file_mcts_one));
         BufferedWriter writer_mcts_two = new BufferedWriter(new FileWriter(file_mcts_two));
 
@@ -47,14 +45,17 @@ public class Tournament {
         writers.add(writer_random);
         writers.add(writer_basic);
         writers.add(writer_advanced);
-        writers.add(writer_mcts_zero);
         writers.add(writer_mcts_one);
         writers.add(writer_mcts_two);
 
         int[] options = new int[3];
         options[0] = 20; // thresehold for mcts select
         options[1] = 10; // Expand nodes
-        options[2] = 1000; // Timer
+        options[2] = 10; // Timer
+
+        int[] options_one = new int[3];
+        options_one[0] = 20; // Thresehold
+        options_one[2] = 10; // Timer
         
         // Holds the teams
         ArrayList<ArrayList<Player>> teams = new ArrayList<ArrayList<Player>>();
@@ -77,19 +78,13 @@ public class Tournament {
         team_advanced.add(new RandomPlayer());
         team_advanced.add(new RandomPlayer());
         team_advanced.add(new RandomPlayer());
-/*
-        ArrayList<Player> team_mcts_zero = new ArrayList<Player>();
-        team_mcts_zero.add(new MCTSPlayer());
-        team_mcts_zero.add(new RandomPlayer());
-        team_mcts_zero.add(new RandomPlayer());
-        team_mcts_zero.add(new RandomPlayer());
 
         ArrayList<Player> team_mcts_one = new ArrayList<Player>();
-        team_mcts_one.add(new MCTSPlayer_one());
+        team_mcts_one.add(new MCTSPlayer_one(options_one));
         team_mcts_one.add(new RandomPlayer());
         team_mcts_one.add(new RandomPlayer());
         team_mcts_one.add(new RandomPlayer());
-*/
+
         ArrayList<Player> team_mcts_two = new ArrayList<Player>();
         team_mcts_two.add(new MCTSPlayer_two(options));
         team_mcts_two.add(new RandomPlayer());
@@ -100,8 +95,7 @@ public class Tournament {
         teams.add(team_random);
         teams.add(team_basic);
         teams.add(team_advanced);
-        //teams.add(team_mcts_zero);
-        //teams.add(team_mcts_one);
+        teams.add(team_mcts_one);
         teams.add(team_mcts_two);
 
         // Play out the games, generating a new deal / state each time
@@ -112,29 +106,40 @@ public class Tournament {
           State state = new State(true, -1, new ArrayList<Card>());
           ArrayList<ArrayList<Card>> deal = Controller.GenerateHands(state, null);
 
+          // Repeat the playouts for each configuration of the teams
+          for (int y = 0; y < 4; y++) {
+            // Swap around the order of the players
+            // Testing the playout
+            for (int i = 0; i < teams.size(); i++) {
+              // ENABLE SWAPPING OF ORDER
+              /*
+              // Hold the player
+              Player tempPlayer = teams.get(i).get(0);
+              // Remove player from teams array
+              teams.get(i).remove(0);
+              // Add it on to the end again
+              teams.get(i).add(tempPlayer);
 
-          // Play out the actual games for each team
-          for (int i = 0; i < teams.size(); i++) {
+              System.out.println(teams.get(i));
+              */
 
-          }
+              state.resetCardsPlayed();
+              Controller control = new Controller(state, teams.get(i), null);
 
-          // Testing the playout
-          for (int i = 0; i < 3; i++) {
-            state.resetCardsPlayed();
-            Controller control = new Controller(state, teams.get(i), null);
+              State results = control.playGames(1, 0, 13);
+              
+              int[] scores = results.getScores();
 
-            State results = control.playGames(1, 0, 13);
-            
-            int[] scores = results.getScores();
+              System.err.println("END OF GAME " + countOfGames + " for player " + i + " round " + y);
+              for (int x = 0; x < 4; x++) {
 
-            System.err.println("END OF GAME " + countOfGames + " for player " + i);
-            for (int x = 0; x < 4; x++) {
+                writers.get(i).write(scores[x] + ";");
 
-              writers.get(i).write(scores[x] + ";");
+              }
+              writers.get(i).newLine();
+              writers.get(i).flush();
 
             }
-            writers.get(i).newLine();
-            writers.get(i).flush();
 
           }
 

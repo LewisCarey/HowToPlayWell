@@ -121,6 +121,15 @@ public class State {
       // If we have a current trick in play
       if (currentTrick != null && Misc.RealSize(currentTrick) != 0) {
          // Find the trump suit
+         if (trumpSuit == -1) {
+            // Trump suit was not given to us, we have to find it
+            for (Card i : currentTrick) {
+               if (i != null) {
+                  trumpSuit = i.getSuit();
+                  break;
+               }
+            }
+         }
          //int trumpSuit = currentTrick.get(0).getSuit();
          // If there is a card of that suit among the candidates, delete all other cards not of that suit
          boolean suitPresent = false;
