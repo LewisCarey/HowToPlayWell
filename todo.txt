@@ -1,24 +1,35 @@
 TODO:
 
--> Do your 412 assignment
-	-> Write up done, waiting on David to reply
-
 -> Check out the datacom task
+	-> Get started on it
+	-> Send email tonight or tomorrow confirming that you have started it and are going to work on it 
+	   for the next few weeks
 
--> Get something done for Michael
-
--> TWO MORE THINGS TO DO BEFORE TESTING!!!
-	-> Basic player
-	-> Advanced player
-	-> Brainstorm ideas - go over with Michael on Wednesday
+-> Set your testing environment up tonight before you head into work!
 
 -> REPORT
 	-> While running tests on your programs, do some report stuff...
+	-> FIRST... Get new document up and running and put everything into order!!!!
+	-> Then work through from the start?
+		-> Red for old stuff hat has not been gone over
+	-> Upto section 5 can be completed before you even get any results back	
+	-> Basic diagrams of each implementation working in an example case?
+
 	-> 1) Fix up what Michael suggested in your implementations write up.
 	-> 2) Add a write up for implementation 2
 	-> 3) Fix your interim report
 	-> 4) Put everything together into a final report doc
 	-> 5) Write detailed notes / plans for other sections
+
+-> Specific sections of the report to complete
+	-> UCT write up
+
+-> Further research questions
+	-> IMPLEMENTATION ONE
+
+	-> IMPLEMENTATION TWO
+		-> Would adding logic to node expansion be beneficial? Rather than choosing tricks at random,
+		   choose tricks based on optimal play from opponents?
 
 -> Read through paper "an analysis of UCT in multiplayer games" - especially the Hearts section
 

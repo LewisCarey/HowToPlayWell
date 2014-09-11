@@ -51,11 +51,11 @@ public class Tournament {
         int[] options = new int[3];
         options[0] = 20; // thresehold for mcts select
         options[1] = 10; // Expand nodes
-        options[2] = 10; // Timer
+        options[2] = 150000; // Timer
 
         int[] options_one = new int[3];
         options_one[0] = 20; // Thresehold
-        options_one[2] = 10; // Timer
+        options_one[2] = 300000; // Timer
         
         // Holds the teams
         ArrayList<ArrayList<Player>> teams = new ArrayList<ArrayList<Player>>();
@@ -101,13 +101,13 @@ public class Tournament {
         // Play out the games, generating a new deal / state each time
         int countOfGames = 0;
         // Set up the options
-        while (countOfGames < 5000) {
+        while (true) {
 
           State state = new State(true, -1, new ArrayList<Card>());
           ArrayList<ArrayList<Card>> deal = Controller.GenerateHands(state, null);
 
           // Repeat the playouts for each configuration of the teams
-          for (int y = 0; y < 4; y++) {
+          for (int y = 0; y < 3; y++) {
             // ENABLE SWAPPING OF HANDS
             // Hold the hand
             ArrayList<Card> tempHand = deal.get(0);
@@ -117,7 +117,7 @@ public class Tournament {
             deal.add(tempHand);
 
             // Testing the playout
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < teams.size(); i++) {
 
               state.resetCardsPlayed();
               Controller control = new Controller(state, teams.get(i), deal);

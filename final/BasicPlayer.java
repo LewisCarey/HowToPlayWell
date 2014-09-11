@@ -121,55 +121,20 @@ public class BasicPlayer implements Player  {
             }
          }
 
-         // Check to see if the trick contains Hearts or QoS
-         boolean dangerous = false;
-         for (Card i : state.getCurrentTrick()) {
-            if (i == null) break;
-            if (i.getSuit() == 0 || (i.getSuit() == 1 && i.getSuit() == 10)) {
-               dangerous = true;
-            }
-         }
-
          if (playingToSuit) {
-            // If dangerous, play lowest card possible
-            int rankLead = 0;
+            // Play lowest card possible
+            // Play the LOWEST CARD in the group
+            tempCard = legalHands.get(0);
             for (Card i : legalHands) {
-               if (i.getRank() > rankLead) {
-                  rankLead = i.getRank();
-               }
-            }
-
-            boolean foundCard = false;
-            // Do we have a card lower than the lead?
-            for (Card i : legalHands) {
-               if (i.getRank() < rankLead && i.getRank() > tempCard.getRank()) {
+               if (i.getRank() < tempCard.getRank()) {
                   tempCard = i;
-                  foundCard = true;
-               }
-            }
-            // If we didnt find a card, play highest
-            if (!foundCard) {
-               for (Card i : legalHands) {
-                  if (i.getRank() > tempCard.getRank()) {
-                     tempCard = i;
-                  }
                }
             }
 
          } else {
-            // If we are not playing to suit, unload QoS or our highest card
-            for (Card i : legalHands) {
-               if (i.getRank() > tempCard.getRank()) {
-                  tempCard = i;
-               }
-            }
-            // Check to see if we have QoS
-            for (Card i : legalHands) {
-               if (i.getSuit() == 1 && i.getSuit() == 10) {
-                  tempCard = i;
-                  break;
-               }
-            }
+            // If we are not playing to suit, play random
+            Random rand = new Random();
+            tempCard = legalHands.get(rand.nextInt(legalHands.size()));
 
          }
       }
